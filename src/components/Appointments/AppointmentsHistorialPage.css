@@ -1,0 +1,117 @@
+.appointment-form {
+  font-family: Arial, sans-serif;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #e8ebf5;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.appointment-form__title,
+.appointment-form__calendar-header {
+  text-align: center;
+  font-size: 18px;
+  color: #6d4c7d;
+}
+
+.appointment-form__calendar-container {
+  text-align: center;
+}
+
+.appointment-form__calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.appointment-form__month-button {
+  background-color: transparent;
+  border: none;
+  color: #6d4c7d;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.appointment-form__calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 10px;
+}
+
+.appointment-form__calendar-day,
+.appointment-form__calendar-day-header {
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.appointment-form__calendar-day-header {
+  color: #6d4c7d;
+  font-weight: bold;
+}
+
+.appointment-form__calendar-day--disabled {
+  background-color: #f4f4f4;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.appointment-form__calendar-day--selected {
+  background-color: #fcf2f2;
+  border: 1px solid #f56363;
+  color: #f56363;
+}
+
+.appointment-form__calendar-day--has-appointment {
+  background-color: #f56363;
+  color: white;
+  border: 1px solid #f56363;
+}
+
+.appointment-form__calendar-day-header {
+  color: #6d4c7d;
+}
+
+.appointment-form__calendar-day--empty {
+  background-color: transparent;
+}
+
+.appointment-form__appointment-details {
+  margin-top: 20px;
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.appointment-form__appointment-details h3 {
+  text-align: center;
+  color: #6d4c7d;
+}
+
+.appointment-form__appointment-details p {
+  color: #555;
+}
+.appointment-form__button--confirm {
+  background-color: #28a745;
+}
+
+.appointment-form__button--confirm:hover {
+  background-color: #218838;
+}
+
+.appointment-form__button--cancel {
+  background-color: #dc3545;
+}
+
+.appointment-form__button--cancel:hover {
+  background-color: #c82333;
+}
+
+.appointment-form__button--new {
+  background-color: #007bff;
+}
+
+.appointment-form__button--new:hover {
+  background-color: #0056b3;
+}
