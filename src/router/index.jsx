@@ -5,7 +5,7 @@ import Layout from "../layouts/Layout.jsx";
 import { Error404 } from "../pages/Error404";
 import { Home } from "../pages/home";
 import { Calendar } from "../pages/Calendar";
-import { Login } from "../pages/Login";
+import Login from "../pages/Login";
 import Register from "../pages/Register";
 
 export const router = createBrowserRouter([
