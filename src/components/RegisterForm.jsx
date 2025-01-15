@@ -1,3 +1,4 @@
+
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button } from '@mui/material';
@@ -113,4 +114,5 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm;
+export default RegisterForm
+
