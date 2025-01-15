@@ -2,9 +2,9 @@
 
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layouts/Layout.jsx";
-import { Error404 } from "../pages/Error404";
-import { Home } from "../pages/home";
-import { Calendar } from "../pages/Calendar";
+import  Error404 from "../pages/Error404";
+import Home  from "../pages/home";
+import Calendar from "../pages/Calendar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PatientNewAppointments from "../pages/patient/PatientNewAppointments.jsx";
