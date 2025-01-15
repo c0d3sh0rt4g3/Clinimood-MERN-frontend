@@ -5,11 +5,10 @@ import Layout from "../layouts/Layout.jsx";
 import { Error404 } from "../pages/Error404";
 import { Home } from "../pages/home";
 import { Calendar } from "../pages/Calendar";
-import { Login } from "../pages/Login";
+import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PatientNewAppointments from "../pages/patient/PatientNewAppointments.jsx";
-
-
+import AppointmentsHistory from "../pages/AppointmentsHistory.jsx";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -39,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "new-appointment", 
         element: <PatientNewAppointments />, 
+      },
+      {
+        path: "history", 
+        element: <AppointmentsHistory />, 
       },
 
     ],

@@ -1,7 +1,11 @@
-//import React from 'react'
+//import LoginForm from "../components/LoginForm.jsx";
 
-export const Login = () => {
-  return (
-    <div>Login</div>
-  )
-}
+const Login = () => {
+    return (
+        <div>
+           
+        </div>
+    );
+};
+
+export default Login;
