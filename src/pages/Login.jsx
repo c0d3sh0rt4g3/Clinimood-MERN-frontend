@@ -1,9 +1,12 @@
-import LoginForm from "../components/LoginForm.jsx";
+//import LoginForm from "../components/LoginForm.jsx";
 
 const Login = () => {
     return (
         <div>
+
             <LoginForm/>
+
+
         </div>
     );
 };
