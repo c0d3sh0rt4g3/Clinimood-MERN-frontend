@@ -3,7 +3,10 @@
 const Login = () => {
     return (
         <div>
-           
+
+            <LoginForm/>
+
+
         </div>
     );
 };
