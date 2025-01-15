@@ -7,6 +7,8 @@ import { Home } from "../pages/home";
 import { Calendar } from "../pages/Calendar";
 import { Login } from "../pages/Login";
 import Register from "../pages/Register";
+import PatientNewAppointments from "../pages/patient/PatientNewAppointments.jsx";
+
 
 export const router = createBrowserRouter([
   {
@@ -35,8 +37,8 @@ export const router = createBrowserRouter([
         element: <Calendar />, 
       },
       {
-        path: "calendar", 
-        element: <Calendar />, 
+        path: "new-appointment", 
+        element: <PatientNewAppointments />, 
       },
 
     ],
