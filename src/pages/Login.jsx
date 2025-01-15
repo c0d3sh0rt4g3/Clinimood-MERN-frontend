@@ -3,7 +3,10 @@ import LoginForm from "../components/LoginForm.jsx";
 const Login = () => {
     return (
         <div>
-            <LoginForm />
+
+            <LoginForm/>
+
+
         </div>
     );
 };
