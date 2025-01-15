@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { addMonths, subMonths, format, startOfMonth, endOfMonth } from "date-fns"
-import "./AppointmentForm.css"
+import "./NewAppointmentForm.css"
 
 
 // Public holidays (customize as needed)
