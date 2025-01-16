@@ -8,6 +8,25 @@ const UserRow = ({ userName, email, dni, role }) => {
         setCurrentRole(selectedRole);
     };
 
+    const handleDelete = async () => {
+        try {
+            const url = `https://clinimood-mern-backend.onrender.com/users/${dni}`; // Asegúrate de pasar `userId` como prop
+
+            const response = await fetch(url, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            console.log(`User with DNI ${dni} deleted successfully.`);
+
+        } catch (error) {
+            console.error(`Error deleting user: ${error}`);
+        }
+    };
+
     return (
         <tr>
             <td>{userName}</td>
@@ -21,10 +40,10 @@ const UserRow = ({ userName, email, dni, role }) => {
                 </select>
             </td>
             <td>
-                <button onClick={() => console.log(`Deleted user: ${userName}`)}> Eliminar </button>
+                <button onClick={handleDelete}>Eliminar</button>
             </td>
             <td>
-                <button onClick={() => console.log(`Updated user: ${userName}`)}> Guardar </button>
+                <button onClick={() => console.log(`Updated user: ${userName}`)}>Guardar</button>
             </td>
         </tr>
     );
