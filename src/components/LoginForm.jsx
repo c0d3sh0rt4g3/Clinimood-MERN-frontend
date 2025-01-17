@@ -1,46 +1,41 @@
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button } from '@mui/material';
-import { Form } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from "../context/useAuthStore.jsx";
 
 const validationSchema = Yup.object({
-    DNI: Yup.string().required('Your DNI is required'),
-    email: Yup.string().email('Email not valid').required('The email is required'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string().email('Email no válido').required('El email es requerido'),
+    password: Yup.string().required('La contraseña es requerida'),
 });
 
 const LoginForm = () => {
+    const loginUser = useAuthStore((state) => state.loginUser);
+    const navigate = useNavigate();
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        try {
-            console.log(values);
-        } catch (err) {
-            console.log(err);
+        const result = await loginUser(values);
+
+        if (result.success) {
+            console.log("Login exitoso, redirigiendo...");
+            navigate('/');
+        } else {
+            console.error("Error de login:", result.error);
+            alert(result.error || "Error desconocido al iniciar sesión");
         }
+
         setSubmitting(false);
     };
 
     return (
         <Formik
-            initialValues={{ DNI: '', email: '', password: '' }}
+            initialValues={{ email: '', password: '' }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ isSubmitting }) => (
-                <Form className="auth-form-container">
+            {({ isSubmitting, handleSubmit }) => (
+                <form className="auth-form-container" onSubmit={handleSubmit}>
                     <h1>LOGIN</h1>
-
-                    <Field name="DNI">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                label="DNI"
-                                variant="outlined"
-                                margin="normal"
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="DNI" component="div" className="error" />
 
                     <Field name="email">
                         {({ field }) => (
@@ -50,6 +45,7 @@ const LoginForm = () => {
                                 label="Email"
                                 variant="outlined"
                                 margin="normal"
+                                fullWidth
                             />
                         )}
                     </Field>
@@ -63,6 +59,7 @@ const LoginForm = () => {
                                 label="Password"
                                 variant="outlined"
                                 margin="normal"
+                                fullWidth
                             />
                         )}
                     </Field>
@@ -72,13 +69,20 @@ const LoginForm = () => {
                         type="submit"
                         variant="contained"
                         disabled={isSubmitting}
+                        fullWidth
                     >
-                        {isSubmitting ? 'Initializing...' : 'Login'}
+                        {isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión'}
                     </Button>
-                </Form>
+                </form>
             )}
         </Formik>
     );
 };
 
 export default LoginForm;
+
+
+
+
+
+
