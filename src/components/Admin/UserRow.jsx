@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import {useState} from "react";
 
-const UserRow = ({ userName, email, dni, role }) => {
+const UserRow = ({ userName, email, dni, role, onDelete }) => {
     const [currentRole, setCurrentRole] = useState(role);
 
     const handleRoleChange = (e) => {
@@ -10,7 +10,7 @@ const UserRow = ({ userName, email, dni, role }) => {
 
     const handleDelete = async () => {
         try {
-            const url = `https://clinimood-mern-backend.onrender.com/users/${dni}`; // Asegúrate de pasar `userId` como prop
+            const url = `https://clinimood-mern-backend.onrender.com/users/${dni}`;
 
             const response = await fetch(url, {
                 method: 'DELETE',
@@ -21,7 +21,7 @@ const UserRow = ({ userName, email, dni, role }) => {
             }
 
             console.log(`User with DNI ${dni} deleted successfully.`);
-
+            onDelete(dni); // Llamar a la función para actualizar la lista
         } catch (error) {
             console.error(`Error deleting user: ${error}`);
         }
@@ -30,8 +30,8 @@ const UserRow = ({ userName, email, dni, role }) => {
     return (
         <tr>
             <td>{userName}</td>
-            <td>{email}</td>
             <td>{dni}</td>
+            <td>{email}</td>
             <td>
                 <select value={currentRole} onChange={handleRoleChange}>
                     <option value="patient">Patient</option>
