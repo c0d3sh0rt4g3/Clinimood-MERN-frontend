@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import useAuthStore from "../context/useAuthStore.jsx";
 
 const validationSchema = Yup.object({
-    email: Yup.string().email('Email no válido').required('El email es requerido'),
-    password: Yup.string().required('La contraseña es requerida'),
+    email: Yup.string().email('Email not valid').required('Email is required'),
+    password: Yup.string().required('Password is required'),
 });
 
 const LoginForm = () => {
@@ -17,11 +17,11 @@ const LoginForm = () => {
         const result = await loginUser(values);
 
         if (result.success) {
-            console.log("Login exitoso, redirigiendo...");
+            console.log("Succesful");
             navigate('/');
         } else {
-            console.error("Error de login:", result.error);
-            alert(result.error || "Error desconocido al iniciar sesión");
+            console.error("Login error:", result.error);
+            alert(result.error || "Unknown error");
         }
 
         setSubmitting(false);
@@ -71,7 +71,7 @@ const LoginForm = () => {
                         disabled={isSubmitting}
                         fullWidth
                     >
-                        {isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión'}
+                        {isSubmitting ? '...' : 'Login'}
                     </Button>
                 </form>
             )}
@@ -80,6 +80,7 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
 
 
 
