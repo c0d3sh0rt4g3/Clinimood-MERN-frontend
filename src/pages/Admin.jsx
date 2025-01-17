@@ -8,6 +8,7 @@ const Admin = () => {
         fetchData();
     }, []);
 
+    // Function to call the api to get all users on our DB
     const fetchData = async () => {
         try {
             const url = "https://clinimood-mern-backend.onrender.com/users";
@@ -27,9 +28,15 @@ const Admin = () => {
         }
     };
 
+    // When a user is deleted, the API is called again to display updated data
     const handleUserDelete = () => {
         fetchData()
-    };
+    }
+
+    // When a user role is changed, the API is called again to display updated data
+    const handleUserSave = () => {
+        fetchData()
+    }
 
     return (
         <table>
@@ -51,6 +58,7 @@ const Admin = () => {
                             dni={user.DNI}
                             role={user.role}
                             onDelete={handleUserDelete}
+                            onSave={handleUserSave}
                         />
                     ))
                 ) : (
