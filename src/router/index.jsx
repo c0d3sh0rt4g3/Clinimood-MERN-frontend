@@ -11,6 +11,8 @@ import PatientNewAppointments from "../pages/patient/PatientNewAppointments.jsx"
 import AppointmentsHistory from "../pages/AppointmentsHistory.jsx";
 import PrivateLayout from "../layouts/PrivateLayout.jsx";
 import Admin from "../pages/Admin.jsx";
+
+import ContactForm from "../components/ContactForm.jsx";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -45,7 +47,10 @@ export const router = createBrowserRouter([
         path: "history", 
         element: <AppointmentsHistory />, 
       },
-
+      {
+        path: "contact",
+        element: <ContactForm />,
+      }
     ],
   },
   {
