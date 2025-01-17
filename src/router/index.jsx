@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PatientNewAppointments from "../pages/patient/PatientNewAppointments.jsx";
 import AppointmentsHistory from "../pages/AppointmentsHistory.jsx";
+import Doctors from "../pages/Doctors.jsx";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -43,7 +44,10 @@ export const router = createBrowserRouter([
         path: "history", 
         element: <AppointmentsHistory />, 
       },
-
+      {
+        path: "doctors",
+        element: <Doctors/>
+      }
     ],
   },
 ])
