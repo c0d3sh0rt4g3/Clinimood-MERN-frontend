@@ -9,6 +9,9 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PatientNewAppointments from "../pages/patient/PatientNewAppointments.jsx";
 import AppointmentsHistory from "../pages/AppointmentsHistory.jsx";
+import PrivateLayout from "../layouts/PrivateLayout.jsx";
+import Admin from "../pages/Admin.jsx";
+
 import ContactForm from "../components/ContactForm.jsx";
 export const router = createBrowserRouter([
   {
@@ -50,4 +53,15 @@ export const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path: "/admin",
+    element: <PrivateLayout/>,
+    errorElement: <Error404/>,
+    children: [
+      {
+        index: true,
+        element: <Admin/>
+      }
+    ]
+  }
 ])
