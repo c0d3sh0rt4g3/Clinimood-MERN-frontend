@@ -43,6 +43,7 @@ const Doctors = () => {
             // Assuming the response follows the structure { data: { data: [...] } }
             setDoctors(response.data.data)
             setFilteredDoctors(response.data.data)
+            console.log(response.data.data.profilePicture)
         } catch (error) {
             console.error(error)
             alert("Failed to fetch doctors. Please try again later.")
@@ -101,7 +102,7 @@ const Doctors = () => {
                         key={doctor._id}
                         name={doctor.name}
                         specialization={doctor.specialization}
-                        img={doctor.img}
+                        profilePicture={doctor.profilePicture}
                     />
                 ))
             ) : (
