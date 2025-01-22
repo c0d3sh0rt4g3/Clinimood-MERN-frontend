@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react"
 import DoctorCard from "../components/DoctorCard.jsx"
 
 const Doctors = () => {
     const [doctors, setDoctors] = useState([])
-    const [searchQuery, setSearchQuery] = useState('')
-    const [specializationFilter, setSpecializationFilter] = useState('')
+    const [searchQuery, setSearchQuery] = useState("")
+    const [specializationFilter, setSpecializationFilter] = useState("")
     const [filteredDoctors, setFilteredDoctors] = useState([])
+    const [loading, setLoading] = useState(true) // Add loading state
 
     useEffect(() => {
         fetchDoctors()
@@ -13,28 +14,44 @@ const Doctors = () => {
 
     useEffect(() => {
         // Apply both name and specialization filters
-        const filtered = doctors.filter(doctor => {
-            const matchesName = doctor.name.toLowerCase().includes(searchQuery.toLowerCase())
-            const matchesSpecialization = specializationFilter === '' ||
-                                          doctor.specialization.toLowerCase() === specializationFilter.toLowerCase()
-            return matchesName && matchesSpecialization
-        })
-        setFilteredDoctors(filtered)
+        const timeoutId = setTimeout(() => {
+            const filtered = doctors.filter((doctor) => {
+                const matchesName = doctor.name
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+                const matchesSpecialization =
+                    specializationFilter === "" ||
+                    doctor.specialization.toLowerCase() ===
+                        specializationFilter.toLowerCase()
+                return matchesName && matchesSpecialization
+            })
+            setFilteredDoctors(filtered)
+        }, 300)
+
+        return () => clearTimeout(timeoutId)
     }, [searchQuery, specializationFilter, doctors])
 
     const fetchDoctors = async () => {
+        setLoading(true) // Start loading
         const url = "https://clinimood-mern-backend.onrender.com/users/role/doctor"
 
-        const response = await fetch(url)
+        try {
+            const response = await fetch(url)
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`)
+            }
+
+            const data = await response.json()
+
+            setDoctors(data.data)
+            setFilteredDoctors(data.data)
+        } catch (error) {
+            console.error(error)
+            alert("Failed to fetch doctors. Please try again later.")
+        } finally {
+            setLoading(false)
         }
-
-        const data = await response.json()
-
-        setDoctors(data.data)
-        setFilteredDoctors(data.data)
     }
 
     // Update search query
@@ -48,7 +65,13 @@ const Doctors = () => {
     }
 
     // Get unique specializations for the dropdown
-    const specializations = [...new Set(doctors.map(doctor => doctor.specialization))]
+    const specializations = [
+        ...new Set(doctors.map((doctor) => doctor.specialization)),
+    ]
+
+    if (loading) {
+        return <p>Loading doctors...</p>
+    }
 
     return (
         <div>
@@ -76,7 +99,7 @@ const Doctors = () => {
                 </select>
             </div>
             {filteredDoctors.length > 0 ? (
-                filteredDoctors.map(doctor => (
+                filteredDoctors.map((doctor) => (
                     <DoctorCard
                         key={doctor._id}
                         name={doctor.name}
