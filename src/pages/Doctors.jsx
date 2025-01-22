@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import axios from "axios"
 import DoctorCard from "../components/DoctorCard.jsx"
 
 const Doctors = () => {
@@ -6,7 +7,7 @@ const Doctors = () => {
     const [searchQuery, setSearchQuery] = useState("")
     const [specializationFilter, setSpecializationFilter] = useState("")
     const [filteredDoctors, setFilteredDoctors] = useState([])
-    const [loading, setLoading] = useState(true) // Add loading state
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchDoctors()
@@ -36,21 +37,17 @@ const Doctors = () => {
         const url = "https://clinimood-mern-backend.onrender.com/users/role/doctor"
 
         try {
-            const response = await fetch(url)
+            // Using axios to fetch data
+            const response = await axios.get(url)
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`)
-            }
-
-            const data = await response.json()
-
-            setDoctors(data.data)
-            setFilteredDoctors(data.data)
+            // Assuming the response follows the structure { data: { data: [...] } }
+            setDoctors(response.data.data)
+            setFilteredDoctors(response.data.data)
         } catch (error) {
             console.error(error)
             alert("Failed to fetch doctors. Please try again later.")
         } finally {
-            setLoading(false)
+            setLoading(false) // End loading
         }
     }
 
@@ -75,7 +72,7 @@ const Doctors = () => {
 
     return (
         <div>
-            <div style={{ marginBottom: "20px" }}>
+            <div>
                 {/* Search Bar */}
                 <input
                     type="text"
