@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import UserRow from "../components/Admin/UserRow.jsx";
+import React, { useEffect, useState } from "react"
+import UserRow from "../components/Admin/UserRow.jsx"
+import axios from "axios"
 
 const Admin = () => {
-    const [usersData, setUsersData] = useState([]);
+    const [usersData, setUsersData] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData()
+    }, [])
 
-    // Function to call the api to get all users on our DB
+    // Function to call the API to get all users in our DB
     const fetchData = async () => {
+        setLoading(true)
         try {
-            const url = "https://clinimood-mern-backend.onrender.com/users";
+            const url = "https://clinimood-mern-backend.onrender.com/users"
 
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            setUsersData(data.data);
-            console.log(data.data);
+            // Using axios to fetch data
+            const response = await axios.get(url)
+            setUsersData(response.data.data)
+            console.log(response.data.data)
         } catch (error) {
-            console.error(`Error fetching data: ${error}`);
+            console.error(`Error fetching data: ${error}`)
+        } finally {
+            setLoading(false)
         }
-    };
+    }
 
     // When a user is deleted, the API is called again to display updated data
     const handleUserDelete = () => {
@@ -36,6 +35,10 @@ const Admin = () => {
     // When a user role is changed, the API is called again to display updated data
     const handleUserSave = () => {
         fetchData()
+    }
+
+    if (loading) {
+        return <p>Loading user data...</p> // Loading message
     }
 
     return (
@@ -68,7 +71,7 @@ const Admin = () => {
                 )}
             </tbody>
         </table>
-    );
-};
+    )
+}
 
-export default Admin;
+export default Admin
