@@ -6,7 +6,7 @@ import AppointmentsPage from "../../components/Appointments/AppointmentsHistoria
 const PatientMedicalHistory = () => {
   return (
     <div>
-      <h1>Mis citas</h1>
+      <h1>Appointment history</h1>
       <AppointmentsPage/>
     </div>
   )

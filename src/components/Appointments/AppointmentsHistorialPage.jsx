@@ -105,6 +105,7 @@ const AppointmentForm = () => {
   };
 
   return (
+    
     <div className="appointment-form">
       <h2 className="appointment-form__title">Select a Date</h2>
 
@@ -145,26 +146,19 @@ const AppointmentForm = () => {
             </div>
           </div>
 
-          <div className="appointment-form__appointments-list">
-            <h3>All Appointments</h3>
-            <ul>
-              {appointments.map((appt) => (
-                <li
-                  key={appt._id}
-                  className={`appointment-form__appointment-item ${
-                    selectedAppointment?._id === appt._id ? "appointment-form__appointment-item--selected" : ""
-                  }`}
-                  onClick={() => setSelectedAppointment(appt)}
-                >
-                  {format(new Date(appt.date), "MMMM dd, yyyy hh:mm a")} - {appt.description}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {!selectedAppointment && selectedDate && (
+        <div className="appointment-form__appointment-details">
+          <h3>No Appointments</h3>
+          <p>No appointments found for {format(new Date(selectedDate), "MMMM dd, yyyy")}.</p>
+          <button
+            className="appointment-form__button appointment-form__button--new"
+            onClick={() => (window.location.href = "/new-appointment")}
+          >
+            Get New Appointment
+          </button>
         </div>
       )}
-
-      {selectedAppointment && (
+          {selectedAppointment && (
         <div className="appointment-form__appointment-details">
           <h3>Appointment Details</h3>
           <p>
@@ -180,21 +174,35 @@ const AppointmentForm = () => {
           <p>
             <strong>Status:</strong> {selectedAppointment.status}
           </p>
+          
+        </div>
+
+      )}
+
+      
         </div>
       )}
 
-      {!selectedAppointment && selectedDate && (
-        <div className="appointment-form__appointment-details">
-          <h3>No Appointments</h3>
-          <p>No appointments found for {format(new Date(selectedDate), "MMMM dd, yyyy")}.</p>
-          <button
-            className="appointment-form__button appointment-form__button--new"
-            onClick={() => (window.location.href = "/new-appointment")}
-          >
-            Get New Appointment
-          </button>
-        </div>
-      )}
+<div className="appointment-form__appointments-list">
+          <h3>All Appointments</h3>
+          <ul>
+            {appointments.map((appt) => (
+              <li
+                key={appt._id}
+                className={`appointment-form__appointment-item ${
+                  selectedAppointment?._id === appt._id ? "appointment-form__appointment-item--selected" : ""
+                }`}
+                onClick={() => setSelectedAppointment(appt)}
+              >
+                {format(new Date(appt.date), "MMMM dd, yyyy hh:mm a")} - {appt.description}
+              </li>
+            ))}
+          </ul>
+        
+      
+      </div>
+       
+
     </div>
   );
 };
