@@ -33,14 +33,6 @@ export const router = createBrowserRouter([
         element: <Register />, 
       },
       {
-        path: "calendar", 
-        element: <Calendar />, 
-      },
-      {
-        path: "calendar", 
-        element: <Calendar />, 
-      },
-      {
         path: "new-appointment", 
         element: <PatientNewAppointments />, 
       },
