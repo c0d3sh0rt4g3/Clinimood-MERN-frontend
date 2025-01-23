@@ -1,0 +1,77 @@
+/* Fondo morado para toda la página */
+  
+  /* Bloque principal: navbar */
+  .navbar {
+    background-color: #6c3483; /* Mismo morado */
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  /* Logo */
+  .navbar__logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar__logo-image {
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  .navbar__logo-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  /* Links */
+  .navbar__links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .navbar__link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s;
+  }
+  
+  .navbar__link:hover {
+    color: #f1c40f; /* Amarillo */
+  }
+  
+  /* Botones de acciones */
+  .navbar__actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar__button {
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .navbar__button--primary {
+    background-color: #f39c12; /* Naranja */
+    color: #fff;
+  }
+  
+  .navbar__button--primary:hover {
+    background-color: #e67e22; /* Naranja oscuro */
+  }
+  
