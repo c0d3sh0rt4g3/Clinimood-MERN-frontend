@@ -8,6 +8,7 @@ import Calendar from "../pages/Calendar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PatientNewAppointments from "../pages/patient/PatientNewAppointments.jsx";
+import PatientMedicalHistory from "../pages/patient/PatientMedicalHistory.jsx";
 import AppointmentsHistory from "../pages/AppointmentsHistory.jsx";
 import Doctors from "../pages/Doctors.jsx";
 import PrivateLayout from "../layouts/PrivateLayout.jsx";
@@ -37,16 +38,12 @@ export const router = createBrowserRouter([
         element: <Calendar />, 
       },
       {
-        path: "calendar", 
-        element: <Calendar />, 
-      },
-      {
         path: "new-appointment", 
         element: <PatientNewAppointments />, 
       },
       {
         path: "history", 
-        element: <AppointmentsHistory />, 
+        element: <PatientMedicalHistory />, 
       },
       {
         path: "doctors",
