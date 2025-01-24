@@ -2,6 +2,7 @@
 @use './components/NewAppointmentForm.scss';
 @use './components/NavBar.scss';
 @use './components/Footer.scss';
+@use "./components/Admin.scss";
 
 :root{
     --color-primary: #70348A
@@ -10,6 +11,13 @@
     --dark-orange: #e67e22;
     --dark-bg: #121212;
     --dark-text: #ffffff;
+
+
+
+
+    --color-primary: #70348A;
+    --color-secondary: #F58524;
+
     body {
         margin: 0;
         font-family: Arial, sans-serif;
@@ -17,13 +25,8 @@
         color: #fff;
       }
 
-      /* 🌙 Modo oscuro */
 .dark-mode {
   background-color: var(--dark-bg);
   color: var(--dark-text);
 }
 }
-
-
-
-

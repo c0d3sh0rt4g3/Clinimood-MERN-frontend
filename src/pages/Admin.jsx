@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import UserRow from "../components/Admin/UserRow.jsx"
 import axios from "axios"
+import "../style/main.scss"
 
 const Admin = () => {
     const [usersData, setUsersData] = useState([])
@@ -42,16 +43,17 @@ const Admin = () => {
     }
 
     return (
-        <table>
-            <thead>
+        <table id={"users-table"}>
+            <thead id={"table__head"}>
                 <tr>
-                    <th>Username</th>
-                    <th>DNI</th>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <th className={"head__element"}>Username</th>
+                    <th className={"head__element"}>DNI</th>
+                    <th className={"head__element"}>Email</th>
+                    <th className={"head__element"}>Role</th>
+                    <th className={"head__element"}>Manage</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id={"table__body"}>
                 {usersData.length > 0 ? (
                     usersData.map((user, index) => (
                         <UserRow
@@ -65,8 +67,8 @@ const Admin = () => {
                         />
                     ))
                 ) : (
-                    <tr>
-                        <td colSpan="4">No user data available</td>
+                    <tr className={"body__element"}>
+                        <td className={"element__column"} colSpan="4">No user data available</td>
                     </tr>
                 )}
             </tbody>

@@ -1,78 +1,78 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import DoctorCard from "../components/DoctorCard.jsx"
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import axios from "axios";
+import DoctorCard from "../components/DoctorCard.jsx";
 
 const Doctors = () => {
-    const [doctors, setDoctors] = useState([])
-    const [searchQuery, setSearchQuery] = useState("")
-    const [specializationFilter, setSpecializationFilter] = useState("")
-    const [filteredDoctors, setFilteredDoctors] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [doctors, setDoctors] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [specializationFilter, setSpecializationFilter] = useState("");
+    const [filteredDoctors, setFilteredDoctors] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
-        fetchDoctors()
-    }, [])
+        fetchDoctors();
+    }, []);
 
     useEffect(() => {
-        // Apply both name and specialization filters
         const timeoutId = setTimeout(() => {
             const filtered = doctors.filter((doctor) => {
                 const matchesName = doctor.name
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase())
+                    .includes(searchQuery.toLowerCase());
                 const matchesSpecialization =
                     specializationFilter === "" ||
                     doctor.specialization.toLowerCase() ===
-                        specializationFilter.toLowerCase()
-                return matchesName && matchesSpecialization
-            })
-            setFilteredDoctors(filtered)
-        }, 300)
+                        specializationFilter.toLowerCase();
+                return matchesName && matchesSpecialization;
+            });
+            setFilteredDoctors(filtered);
+        }, 300);
 
-        return () => clearTimeout(timeoutId)
-    }, [searchQuery, specializationFilter, doctors])
+        return () => clearTimeout(timeoutId);
+    }, [searchQuery, specializationFilter, doctors]);
 
     const fetchDoctors = async () => {
-        setLoading(true) // Start loading
-        const url = "https://clinimood-mern-backend.onrender.com/users/role/doctor"
+        setLoading(true); // Start loading
+        const url =
+            "https://clinimood-mern-backend.onrender.com/users/role/doctor";
 
         try {
             // Using axios to fetch data
-            const response = await axios.get(url)
+            const response = await axios.get(url);
 
             // Assuming the response follows the structure { data: { data: [...] } }
-            setDoctors(response.data.data)
-            setFilteredDoctors(response.data.data)
-            console.log(response.data.data.profilePicture)
+            setDoctors(response.data.data);
+            setFilteredDoctors(response.data.data);
+            console.log(response.data.data.profilePicture);
         } catch (error) {
-            console.error(error)
-            alert("Failed to fetch doctors. Please try again later.")
+            console.error(error);
+            alert("Failed to fetch doctors. Please try again later.");
         } finally {
-            setLoading(false) // End loading
+            setLoading(false); // End loading
         }
-    }
+    };
 
-    // Update search query
     const handleSearch = (event) => {
-        setSearchQuery(event.target.value)
-    }
+        setSearchQuery(event.target.value);
+    };
 
-    // Update specialization filter
     const handleSpecializationChange = (event) => {
-        setSpecializationFilter(event.target.value)
-    }
+        setSpecializationFilter(event.target.value);
+    };
 
-    // Get unique specializations for the dropdown
     const specializations = [
         ...new Set(doctors.map((doctor) => doctor.specialization)),
-    ]
+    ];
 
     if (loading) {
-        return <p>Loading doctors...</p>
+        return <p>Loading doctors...</p>;
     }
 
     return (
-        <div>
+        <>
             <div>
                 {/* Search Bar */}
                 <input
@@ -96,6 +96,7 @@ const Doctors = () => {
                     ))}
                 </select>
             </div>
+            {/*If there's doctors we loop through them to display them*/}
             {filteredDoctors.length > 0 ? (
                 filteredDoctors.map((doctor) => (
                     <DoctorCard
@@ -108,8 +109,13 @@ const Doctors = () => {
             ) : (
                 <p>No doctors found.</p>
             )}
-        </div>
-    )
-}
 
-export default Doctors
+            {/* Navigate to Calendar Page Button */}
+            <button onClick={() => navigate("/calendar")}>
+                Make an appointment
+            </button>
+        </>
+    );
+};
+
+export default Doctors;
