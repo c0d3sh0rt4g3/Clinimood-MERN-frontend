@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import useAuthStore from '../context/useAuthStore'; // Asegúrate de usar la ruta correcta
+import useAuthStore from '../context/useAuthStore';
 import '../style/main.scss';
 
 const Navbar = () => {
@@ -28,7 +28,7 @@ const Navbar = () => {
   // Logout
   const handleLogout = () => {
     clearUser();
-    navigate('/login');
+    navigate('/');
   };
 
   return (

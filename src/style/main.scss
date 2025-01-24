@@ -1,12 +1,12 @@
 @use './components/AppointmentsHistorialPage.scss';
 @use './components/NewAppointmentForm.scss';
-@use './components/NavBar.scss';
+@use './components/Navbar.scss';
 @use './components/Footer.scss';
 @use "./components/Admin.scss";
 
 :root{
-    --color-primary: #70348A
-    --color-secondary: #F58524
+    --color-primary: #70348A;
+    --color-secondary: #F58524;
     --primary-orange: #f39c12;
     --dark-orange: #e67e22;
     --dark-bg: #121212;

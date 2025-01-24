@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from "../context/useAuthStore.jsx";
+import log from "eslint-plugin-react/lib/util/log.js";
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Email not valid').required('Email is required'),
@@ -12,13 +13,14 @@ const validationSchema = Yup.object({
 const LoginForm = () => {
     const loginUser = useAuthStore((state) => state.loginUser);
     const navigate = useNavigate();
+    const { user } = useAuthStore();
 
     const handleSubmit = async (values, { setSubmitting }) => {
         const result = await loginUser(values);
 
         if (result.success) {
-            console.log("Succesful");
-            navigate('/');
+            console.log("Success")
+            user.role === "admin" ? navigate("/admin") : navigate("/");
         } else {
             console.error("Login error:", result.error);
             alert(result.error || "Unknown error");
