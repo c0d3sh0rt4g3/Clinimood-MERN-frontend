@@ -59,29 +59,30 @@ const UserRow = ({ userName, email, dni, role, onDelete, onSave }) => {
     }
 
     return (
-        <tr>
-            <td>{userName}</td>
-            <td>{dni}</td>
-            <td>{email}</td>
+        <tr className={"body__element"}>
+            <td className={"element__column"}>{userName}</td>
+            <td className={"element__column"}>{dni}</td>
+            <td className={"element__column"}>{email}</td>
             {/*If the user displayed has a role different from admin, it displays the save and delete user*/
                 role !== "admin" ? (
                     <>
-                        <td>
-                            <select value={currentRole} onChange={handleRoleChange}>
+                        <td className={"element__column"}>
+                            <select id={"column__role-selector"} value={currentRole} onChange={handleRoleChange}>
                                 <option value="patient">Patient</option>
                                 <option value="doctor">Doctor</option>
                                 <option value="admin">Admin</option>
                             </select>
                         </td>
-                        <td>
-                            <button onClick={handleDelete}>Eliminar</button>
-                        </td>
-                        <td>
-                            <button onClick={handleSave}>Guardar</button>
+                        <td className={"element__column"}>
+                            <button id={"column__delete-btn"} className={"column__btn"} onClick={handleDelete}>Eliminar</button>
+                            <button id={"column__save-btn"} className={"column__btn"} onClick={handleSave}>Guardar</button>
                         </td>
                     </>
                 ) : (
-                    ""
+                    <>
+                        <td className={"element__column"}>Admin</td>
+                        <td className={"element__column"}></td>
+                    </>
                 )
             }
         </tr>
