@@ -1,15 +1,29 @@
-@import './components/AppointmentsHistorialPage.scss';
-@import './components/NewAppointmentForm.scss';
+@use './components/AppointmentsHistorialPage.scss';
+@use './components/NewAppointmentForm.scss';
+@use './components/NavBar.scss';
+@use './components/Footer.scss';
 
 :root{
     --color-primary: #70348A
     --color-secondary: #F58524
+    --primary-orange: #f39c12;
+    --dark-orange: #e67e22;
+    --dark-bg: #121212;
+    --dark-text: #ffffff;
     body {
         margin: 0;
         font-family: Arial, sans-serif;
         background-color: #6c3483; /* Morado */
         color: #fff;
       }
+
+      /* 🌙 Modo oscuro */
+.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
 }
+}
+
+
 
 

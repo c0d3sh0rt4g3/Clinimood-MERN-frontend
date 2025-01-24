@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { addMonths, subMonths, format, startOfMonth, endOfMonth } from "date-fns"
 
-import "../../style/components/NewAppointmentForm.scss";
+import "../../style/main.scss";
 
 
 // Public holidays (customize as needed)
