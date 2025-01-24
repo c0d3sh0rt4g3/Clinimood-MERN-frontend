@@ -1,0 +1,58 @@
+#users-table {
+  background-color: #e8ebf5;
+  color: #6d4c7d;
+  width: 75vw;
+  border-collapse: collapse;
+  margin: 0 auto;
+  height: 55vh;
+  font-size: 20px;
+}
+
+.head__element, .element__column {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #70348A;
+}
+
+.head__element {
+  background-color: #e88029;
+  color: #fff;
+  font-weight: bold;
+}
+
+// Alternating row background color
+.body__element {
+  background-color: #f9f9f9;
+}
+
+.body__element:nth-child(even) {
+  background-color: #eaeaea;
+}
+
+.column__btn, #column__role-selector{
+  border: none;
+}
+
+.column__btn {
+  width: 10vh;
+  height: 3vh;
+  cursor: pointer;
+  border: 2px solid #6d4c7d;
+  border-radius: 5px;
+  margin-left: 25px;
+}
+
+#column__role-selector {
+  color: #6d4c7d;
+  background-color: rgba(33, 136, 56, 0);
+  font-size: 20px;
+}
+
+
+#column__delete-btn {
+  background-color: #f9b67c;
+}
+
+#column__save-btn {
+  background-color: #bdcefb;
+}
