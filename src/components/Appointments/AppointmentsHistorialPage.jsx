@@ -8,7 +8,7 @@ import {
   isBefore,
   isToday,
 } from "date-fns";
-import "./AppointmentsHistorialPage.css";
+import "../../style/components/AppointmentsHistorialPage.scss";
 
 const formatAppointmentDate = (date) => format(new Date(date), "yyyy-MM-dd");
 
