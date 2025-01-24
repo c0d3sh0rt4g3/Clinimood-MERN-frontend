@@ -8,7 +8,12 @@ import Calendar from "../pages/Calendar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PatientNewAppointments from "../pages/patient/PatientNewAppointments.jsx";
-import AppointmentsHistory from "../pages/AppointmentsHistory.jsx";
+import PatientMedicalHistory from "../pages/patient/PatientMedicalHistory.jsx";
+import Doctors from "../pages/Doctors.jsx";
+import PrivateLayout from "../layouts/PrivateLayout.jsx";
+import Admin from "../pages/Admin.jsx";
+import ContactForm from "../components/ContactForm.jsx";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -32,18 +37,32 @@ export const router = createBrowserRouter([
         element: <Calendar />, 
       },
       {
-        path: "calendar", 
-        element: <Calendar />, 
-      },
-      {
         path: "new-appointment", 
         element: <PatientNewAppointments />, 
       },
       {
         path: "history", 
-        element: <AppointmentsHistory />, 
+        element: <PatientMedicalHistory />, 
       },
-
+      {
+        path: "doctors",
+        element: <Doctors/>
+      },
+      {
+        path: "contact",
+        element: <ContactForm />,
+      }
     ],
   },
+  {
+    path: "/admin",
+    element: <PrivateLayout/>,
+    errorElement: <Error404/>,
+    children: [
+      {
+        index: true,
+        element: <Admin/>
+      }
+    ]
+  }
 ])
