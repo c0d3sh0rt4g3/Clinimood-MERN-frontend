@@ -6,7 +6,7 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
-import "./NewAppointmentForm.css";
+import "../../style/main.scss"
 
 const HOLIDAYS = [];
 
