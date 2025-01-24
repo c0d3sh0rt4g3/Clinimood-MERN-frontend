@@ -1,42 +1,39 @@
-import { create } from "zustand";
+import { create } from 'zustand';
+import axios from 'axios';
 
 const useAuthStore = create((set) => ({
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  user: JSON.parse(localStorage.getItem('user')) || null,
+
   setUser: (userData) => {
-    console.log("User logged:", userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+    console.log('User logged:', userData);
+    localStorage.setItem('user', JSON.stringify(userData));
     set({ user: userData });
   },
+
   clearUser: () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
     set({ user: null });
   },
+
   loginUser: async ({ email, password }) => {
     try {
-      const response = await fetch('https://clinimood-mern-backend.onrender.com/users/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post('https://clinimood-mern-backend.onrender.com/users/login', {
+        email,
+        password,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        return { success: false, error: errorData.message || 'Unknown error' };
-      }
+      console.log('Response from backend:', response.data);
 
-      const data = await response.json();
-      console.log("Server response:", data);
-
-      if (data.success) {
-        set({ user: data.data });
-        localStorage.setItem("user", JSON.stringify(data.data));
+      if (response.data.success) {
+        set({ user: response.data.data });
+        localStorage.setItem('user', JSON.stringify(response.data.data));
         return { success: true };
       } else {
-        return { success: false, error: data.error || 'Unknown error' };
+        return { success: false, error: response.data.message || 'Unknown error' };
       }
-    } catch (error) {
-      console.error('petition error:', error.message);
-      return { success: false, error: error.message };
+    } catch (err) {
+      console.error('Login error:', err.response?.data?.message || err.message);
+      return { success: false, error: err.response?.data?.message || err.message };
     }
   },
 }));
