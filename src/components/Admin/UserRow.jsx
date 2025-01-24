@@ -79,7 +79,10 @@ const UserRow = ({ userName, email, dni, role, onDelete, onSave }) => {
                         </td>
                     </>
                 ) : (
-                    <td className={"element__column"}>Admin</td>
+                    <>
+                        <td className={"element__column"}>Admin</td>
+                        <td className={"element__column"}></td>
+                    </>
                 )
             }
         </tr>
