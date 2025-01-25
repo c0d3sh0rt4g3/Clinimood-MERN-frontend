@@ -5,30 +5,36 @@ import {
   format,
   startOfMonth,
   endOfMonth,
-  isBefore,
-  isToday,
 } from "date-fns";
-import "../../style/main.scss"
+import "../../style/main.scss";
+import useAuthStore from '../../context/useAuthStore';
 
 const formatAppointmentDate = (date) => format(new Date(date), "yyyy-MM-dd");
 
 const AppointmentForm = () => {
+  const { user } = useAuthStore(); 
+  const dni = user ? user.DNI : '';
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [doctorDetails, setDoctorDetails] = useState(null); // Nuevo estado para los detalles del doctor
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const today = new Date();
 
   useEffect(() => {
+    if (!dni) return;
+
     const fetchAppointments = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await fetch("https://clinimood-mern-backend.onrender.com/appointments/40123726K");
+        const response = await fetch(
+          `https://clinimood-mern-backend.onrender.com/appointments/${dni}`
+        );
         const result = await response.json();
 
         if (result.success) {
@@ -44,7 +50,35 @@ const AppointmentForm = () => {
     };
 
     fetchAppointments();
-  }, []);
+  }, [dni]); 
+
+  useEffect(() => {
+    if (!selectedAppointment) return;
+
+    const fetchDoctorDetails = async () => {
+      setLoading(true);
+      setDoctorDetails(null);
+
+      try {
+        const response = await fetch(
+          `https://clinimood-mern-backend.onrender.com/users/${selectedAppointment.doctorDNI}`
+        );
+        const result = await response.json();
+
+        if (result.success) {
+          setDoctorDetails(result.data);
+        } else {
+          setError("Failed to fetch doctor details.");
+        }
+      } catch (err) {
+        setError("An error occurred while fetching doctor details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoctorDetails();
+  }, [selectedAppointment]);
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
@@ -105,7 +139,6 @@ const AppointmentForm = () => {
   };
 
   return (
-    
     <div className="appointment-form">
       <h2 className="appointment-form__title">Select a Date</h2>
 
@@ -123,7 +156,7 @@ const AppointmentForm = () => {
               >
                 &lt;
               </button>
-              <h3>{format(currentMonth, "MMMM yyyy")}</h3>
+              <h3 className="appointment-form__title">{format(currentMonth, "MMMM yyyy")}</h3>
               <button
                 type="button"
                 className="appointment-form__month-button"
@@ -147,62 +180,55 @@ const AppointmentForm = () => {
           </div>
 
           {!selectedAppointment && selectedDate && (
-        <div className="appointment-form__appointment-details">
-          <h3>No Appointments</h3>
-          <p>No appointments found for {format(new Date(selectedDate), "MMMM dd, yyyy")}.</p>
-          <button
-            className="appointment-form__button appointment-form__button--new"
-            onClick={() => (window.location.href = "/new-appointment")}
-          >
-            Get New Appointment
-          </button>
-        </div>
-      )}
-          {selectedAppointment && (
-        <div className="appointment-form__appointment-details">
-          <h3>Appointment Details</h3>
-          <p>
-            <strong>Doctor:</strong> {selectedAppointment.doctorDNI}
-          </p>
-          <p>
-            <strong>Date:</strong> {format(new Date(selectedAppointment.date), "MMMM dd, yyyy")} at {" "}
-            {format(new Date(selectedAppointment.date), "hh:mm a")}
-          </p>
-          <p>
-            <strong>Description:</strong> {selectedAppointment.description}
-          </p>
-          <p>
-            <strong>Status:</strong> {selectedAppointment.status}
-          </p>
-          
-        </div>
-
-      )}
-
-      
-        </div>
-      )}
-
-<div className="appointment-form__appointments-list">
-          <h3>All Appointments</h3>
-          <ul>
-            {appointments.map((appt) => (
-              <li
-                key={appt._id}
-                className={`appointment-form__appointment-item ${
-                  selectedAppointment?._id === appt._id ? "appointment-form__appointment-item--selected" : ""
-                }`}
-                onClick={() => setSelectedAppointment(appt)}
+            <div className="appointment-form__appointment-details">
+              <h3>No Appointments</h3>
+              <p>No appointments found for {format(new Date(selectedDate), "MMMM dd, yyyy")}.</p>
+              <button
+                className="appointment-form__button appointment-form__button--new"
+                onClick={() => (window.location.href = "/new-appointment")}
               >
-                {format(new Date(appt.date), "MMMM dd, yyyy hh:mm a")} - {appt.description}
-              </li>
-            ))}
-          </ul>
-        
-      
-      </div>
-       
+                Get New Appointment
+              </button>
+            </div>
+          )}
 
+          {selectedAppointment && doctorDetails && (
+            <div className="appointment-form__appointment-details">
+              <h3>Appointment Details</h3>
+              <p>
+                <strong>Doctor:</strong> {doctorDetails.name} ({doctorDetails.specialization})
+              </p>
+              <p>
+                <strong>Date:</strong> {format(new Date(selectedAppointment.date), "MMMM dd, yyyy")} at{" "}
+                {format(new Date(selectedAppointment.date), "hh:mm a")}
+              </p>
+              <p>
+                <strong>Description:</strong> {selectedAppointment.description}
+              </p>
+              <p>
+                <strong>Status:</strong> {selectedAppointment.status}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="appointment-form__appointments-list">
+        <h3>All Appointments</h3>
+        <ul>
+          {appointments.map((appt) => (
+            <li
+              key={appt._id}
+              className={`appointment-form__appointment-item ${
+                selectedAppointment?._id === appt._id ? "appointment-form__appointment-item--selected" : ""
+              }`}
+              onClick={() => setSelectedAppointment(appt)}
+            >
+              {format(new Date(appt.date), "MMMM dd, yyyy hh:mm a")} - {appt.description}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
