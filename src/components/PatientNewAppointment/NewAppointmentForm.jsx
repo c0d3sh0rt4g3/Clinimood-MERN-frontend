@@ -6,7 +6,7 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
-import useAuthStore from '../../context/useAuthStore'; // Importa el store de autenticación
+import useAuthStore from '../../context/useAuthStore';
 import "../../style/main.scss";
 
 const HOLIDAYS = [];
@@ -32,8 +32,8 @@ const generateTimes = () => {
 const timeslots = generateTimes();
 
 const AppointmentForm = () => {
-  const { user } = useAuthStore.getState(); // Obtener el usuario autenticado
-  const patientDNI = user ? user.DNI : ''; // Obtener el DNI del usuario o dejarlo vacío si no está logueado
+  const { user } = useAuthStore.getState(); 
+  const patientDNI = user ? user.DNI : '';
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [formData, setFormData] = useState({
@@ -138,7 +138,7 @@ const AppointmentForm = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ patientDNI }) // Usamos el DNI del paciente
+          body: JSON.stringify({ patientDNI })
         }
       );
 
@@ -188,10 +188,10 @@ const AppointmentForm = () => {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (!data.success) {
         alert("Appointment created successfully!");
-        await updateHistory(); // Actualizamos el historial
-        window.location.href = "/history";
+        await updateHistory();
+        //window.location.href = "/history";
       } else {
         alert("Error creating appointment: " + data.message);
       }
@@ -299,7 +299,7 @@ const AppointmentForm = () => {
         </div>
 
         <label htmlFor="doctor-select" className="appointment-form__title">
-          Doctor: 
+          Doctor
         </label>
         {loadingDoctors ? (
           <p>Loading doctors...</p>
@@ -330,7 +330,7 @@ const AppointmentForm = () => {
                 weekday: "long",
                 day: "numeric",
               })}
-            </h3>
+            </h3><div>
             {timeslots.map((time, index) => {
               const isDisabled = isTimeSlotTaken(
                 formData.date,
@@ -357,7 +357,9 @@ const AppointmentForm = () => {
                   {time}
                 </button>
               );
-            })}
+            }
+            )}
+            </div>
           </div>
         )}
 

@@ -8,39 +8,37 @@
   --color-primary: #70348A;
   --color-secondary: #F58524;
   --primary-orange: #f39c12;
-  --dark-orange: #e67e22;
+  --dark-orange: #e67e22;  
+
+  --light-bg: #e8ebf5; 
+  --light-text: #333;
+  --light-header-bg: #fff;
+  --light-border: #ddd;
+  --light-day-bg: #fff;
+  --light-disabled-bg: #f4f4f4;
+  --light-selected-bg: #fcf2f2; 
+
   --dark-bg: #121212;
   --dark-text: #ffffff;
-
-  --light-bg: #e8ebf5; /* Fondo claro */
-  --light-text: #333; /* Texto oscuro */
-  --light-header-bg: #fff; /* Fondo claro para los encabezados */
-  --light-border: #ddd; /* Color de borde claro */
-  --light-day-bg: #fff; /* Fondo para los días */
-  --light-disabled-bg: #f4f4f4; /* Fondo de días deshabilitados */
-  --light-selected-bg: #fcf2f2; /* Fondo de días seleccionados */
-
-  /* Colores para Dark Mode */
-  --dark-bg: #121212;
-  --dark-text: #ffffff;
-  --dark-header-bg: #2c2c2c; /* Fondo oscuro para encabezados */
+  --dark-header-bg: #2c2c2c;
   --dark-border: #555;
-  --dark-day-bg: #333; /* Fondo oscuro para los días */
-  --dark-disabled-bg: #444; /* Fondo de días deshabilitados */
-  --dark-selected-bg: #f56363; /* Fondo de días seleccionados */
-
+  --dark-day-bg: #333; 
+  --dark-disabled-bg: #444;
+  --dark-selected-bg: #f56363; 
+  * {
+    transition: all 0.3s ease;
+  }
     body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background-color: #6c3483; /* Morado */
-        color: #fff;
+        background-color: var(--color-primary); 
+        color: var(--dark-text);
       }
-      * {
-        transition: all 0.3s ease;
-      }
+      
       
 .dark-mode {
   background-color: var(--dark-bg);
   color: var(--dark-text);
 }
+
 }

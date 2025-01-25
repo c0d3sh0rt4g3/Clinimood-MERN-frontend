@@ -7,24 +7,25 @@ import {
   endOfMonth,
 } from "date-fns";
 import "../../style/main.scss";
+import useAuthStore from '../../context/useAuthStore';
 
 const formatAppointmentDate = (date) => format(new Date(date), "yyyy-MM-dd");
 
 const AppointmentForm = () => {
+  const { user } = useAuthStore(); 
+  const dni = user ? user.DNI : '';
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [doctorDetails, setDoctorDetails] = useState(null); // Nuevo estado para los detalles del doctor
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Obtener el DNI del paciente desde localStorage
-  const dni = localStorage.getItem("DNI");
 
   const today = new Date();
 
   useEffect(() => {
-    if (!dni) return; // No hacer la solicitud si no hay DNI
+    if (!dni) return;
 
     const fetchAppointments = async () => {
       setLoading(true);
@@ -49,7 +50,35 @@ const AppointmentForm = () => {
     };
 
     fetchAppointments();
-  }, [dni]); // El useEffect depende del DNI
+  }, [dni]); 
+
+  useEffect(() => {
+    if (!selectedAppointment) return;
+
+    const fetchDoctorDetails = async () => {
+      setLoading(true);
+      setDoctorDetails(null);
+
+      try {
+        const response = await fetch(
+          `https://clinimood-mern-backend.onrender.com/users/${selectedAppointment.doctorDNI}`
+        );
+        const result = await response.json();
+
+        if (result.success) {
+          setDoctorDetails(result.data);
+        } else {
+          setError("Failed to fetch doctor details.");
+        }
+      } catch (err) {
+        setError("An error occurred while fetching doctor details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoctorDetails();
+  }, [selectedAppointment]);
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
@@ -163,11 +192,11 @@ const AppointmentForm = () => {
             </div>
           )}
 
-          {selectedAppointment && (
+          {selectedAppointment && doctorDetails && (
             <div className="appointment-form__appointment-details">
               <h3>Appointment Details</h3>
               <p>
-                <strong>Doctor:</strong> {selectedAppointment.doctorDNI}
+                <strong>Doctor:</strong> {doctorDetails.name} ({doctorDetails.specialization})
               </p>
               <p>
                 <strong>Date:</strong> {format(new Date(selectedAppointment.date), "MMMM dd, yyyy")} at{" "}

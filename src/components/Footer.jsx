@@ -12,7 +12,7 @@ const Footer = () => {
       <div className="footer__bottom">
         <div className="footer__text">
           
-          <p>© 2025 Clinimood. Todos los derechos reservados.</p>
+          <p>© 2025. Clinimood. All rights reserved.</p>
         </div>
       </div>
     </footer>
