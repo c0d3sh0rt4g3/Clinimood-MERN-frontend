@@ -6,7 +6,8 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
-import "../../style/main.scss"
+import useAuthStore from '../../context/useAuthStore'; // Importa el store de autenticación
+import "../../style/main.scss";
 
 const HOLIDAYS = [];
 
@@ -27,9 +28,13 @@ const generateTimes = () => {
   return times;
 };
 
+
 const timeslots = generateTimes();
 
 const AppointmentForm = () => {
+  const { user } = useAuthStore.getState(); // Obtener el usuario autenticado
+  const patientDNI = user ? user.DNI : ''; // Obtener el DNI del usuario o dejarlo vacío si no está logueado
+
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [formData, setFormData] = useState({
     date: "",
@@ -41,9 +46,6 @@ const AppointmentForm = () => {
   const [loadingDoctors, setLoadingDoctors] = useState(true);
   const [selectedDate, setSelectedDate] = useState("");
   const [appointments, setAppointments] = useState([]);
-
-  // DNI del paciente de prueba
-  const patientDNI = "40123726K";
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -136,7 +138,7 @@ const AppointmentForm = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ patientDNI }),
+          body: JSON.stringify({ patientDNI }) // Usamos el DNI del paciente
         }
       );
 
@@ -166,7 +168,7 @@ const AppointmentForm = () => {
 
     const appointmentDate = `${formData.date}T${formData.time}`;
     const appointmentBody = {
-      patientDNI,
+      patientDNI, // Usamos el DNI del paciente
       doctorDNI: formData.doctorDni,
       date: appointmentDate,
       description: formData.description,
@@ -188,7 +190,7 @@ const AppointmentForm = () => {
 
       if (data.success) {
         alert("Appointment created successfully!");
-        await updateHistory();
+        await updateHistory(); // Actualizamos el historial
         window.location.href = "/history";
       } else {
         alert("Error creating appointment: " + data.message);
@@ -255,6 +257,12 @@ const AppointmentForm = () => {
   const isFormValid =
     formData.date && formData.doctorDni && formData.time && formData.description;
 
+  if (!user) {
+    // Si el usuario no está logueado, redirigir a la página de login
+    alert("Please log in to make an appointment.");
+    window.location.href = "/login";
+  }
+
   return (
     <div className="appointment-form">
       <h2 className="appointment-form__title">Book an Appointment</h2>
@@ -268,7 +276,7 @@ const AppointmentForm = () => {
             >
               &lt;
             </button>
-            <h3>{format(currentMonth, "MMMM yyyy")}</h3>
+            <h3 className="appointment-form__title">{format(currentMonth, "MMMM yyyy")}</h3>
             <button
               type="button"
               className="appointment-form__month-button"
@@ -290,8 +298,8 @@ const AppointmentForm = () => {
           </div>
         </div>
 
-        <label htmlFor="doctor-select" className="appointment-form__label">
-          Doctor
+        <label htmlFor="doctor-select" className="appointment-form__title">
+          Doctor: 
         </label>
         {loadingDoctors ? (
           <p>Loading doctors...</p>
@@ -317,7 +325,7 @@ const AppointmentForm = () => {
 
         {formData.date && formData.doctorDni && (
           <div className="appointment-form__timeslot-container">
-            <h3>
+            <h3 className="appointment-form__title">
               {new Date(formData.date).toLocaleDateString("en-US", {
                 weekday: "long",
                 day: "numeric",
@@ -353,7 +361,7 @@ const AppointmentForm = () => {
           </div>
         )}
 
-        <label htmlFor="description" className="appointment-form__label">
+        <label htmlFor="description" className="appointment-form__title">
           Description
         </label>
         <textarea
