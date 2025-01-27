@@ -9,6 +9,8 @@ import {
   isToday,
 } from "date-fns";
 import "../../style/main.scss"
+import useAuthStore from "../../context/useAuthStore.jsx";
+import {useNavigate} from "react-router-dom";
 
 const formatAppointmentDate = (date) => format(new Date(date), "yyyy-MM-dd");
 
@@ -21,8 +23,14 @@ const AppointmentForm = () => {
   const [error, setError] = useState(null);
 
   const today = new Date();
+  const { user } = useAuthStore();
+  const navigate = useNavigate()
 
   useEffect(() => {
+      // Redirect to home if not logged in
+      if (!user) {
+          navigate('/')
+      }
     const fetchAppointments = async () => {
       setLoading(true);
       setError(null);
