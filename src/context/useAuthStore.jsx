@@ -22,12 +22,10 @@ const useAuthStore = create((set) => ({
         password,
       });
 
-      console.log('Response from backend:', response.data);
-
       if (response.data.success) {
         set({ user: response.data.data });
         localStorage.setItem('user', JSON.stringify(response.data.data));
-        return { success: true };
+        return { success: true};
       } else {
         return { success: false, error: response.data.message || 'Unknown error' };
       }

@@ -1,26 +1,40 @@
-import { Formik, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { TextField, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import useAuthStore from "../context/useAuthStore.jsx";
-import log from "eslint-plugin-react/lib/util/log.js";
+import { Formik, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import { TextField, Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import useAuthStore from "../context/useAuthStore.jsx"
+import {useEffect} from "react";
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Email not valid').required('Email is required'),
     password: Yup.string().required('Password is required'),
-});
+})
 
 const LoginForm = () => {
-    const loginUser = useAuthStore((state) => state.loginUser);
-    const navigate = useNavigate();
-    const { user } = useAuthStore();
+    const loginUser = useAuthStore((state) => state.loginUser)
+    const navigate = useNavigate()
+    useEffect(() => {
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        // Redirect to home if logged in
+        if (currentUser) {
+            navigate('/')
+        }
+    }, [navigate])
 
     const handleSubmit = async (values, { setSubmitting }) => {
         const result = await loginUser(values);
 
         if (result.success) {
-            console.log("Success")
-            user.role === "admin" ? navigate("/admin") : navigate("/");
+            // Fetch the updated user state after login
+            const updatedUser = useAuthStore.getState().user;
+
+            console.log(updatedUser);
+
+            if (updatedUser.role === "admin") {
+                navigate("/admin");
+            } else {
+                navigate("/");
+            }
         } else {
             console.error("Login error:", result.error);
             alert(result.error || "Unknown error");
@@ -28,6 +42,7 @@ const LoginForm = () => {
 
         setSubmitting(false);
     };
+
 
     return (
         <Formik
@@ -78,14 +93,7 @@ const LoginForm = () => {
                 </form>
             )}
         </Formik>
-    );
-};
+    )
+}
 
-export default LoginForm;
-
-
-
-
-
-
-
+export default LoginForm
