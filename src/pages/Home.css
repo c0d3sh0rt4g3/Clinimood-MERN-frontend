@@ -1,0 +1,104 @@
+
+.home-container {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #ff7e00, #6a0dad);
+    font-family: Calibri;
+    display: flex; /* Cambia el diseño a flexbox */
+    flex-direction: row; /* Coloca los elementos en una fila */
+    justify-content: space-between; /* Espacio entre el contenido y la imagen */
+    align-items: center; /* Alinea verticalmente el contenido */
+    padding: 1rem;
+}
+
+.content-wrapper {
+    max-width: 50%; /* Limita el ancho del contenido textual */
+}
+
+.image-container {
+    max-width: 45%; /* Limita el ancho de la imagen */
+    height: 80vh; /* Define la altura máxima de la imagen */
+}
+
+.right-image {
+    object-fit: cover; /* Asegura que la imagen se recorte para cubrir el área */
+    width: 100%; /* La imagen ocupa el 100% del ancho del contenedor */
+    height: 100%; /* La imagen ocupará el 100% de la altura disponible */
+    border-radius: 1rem; /* Bordes redondeados */
+    animation: fadeIn 1.5s ease-in-out; /* Animación de aparición */
+}
+
+.header-text {
+    width: 100%;
+    color: white;
+    font-size: 4rem;
+    font-weight: lighter;
+    animation: slideIn 1s ease-in-out;
+}
+
+.subheader {
+    width: 100%;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: lighter;
+    animation: slideIn 1.2s ease-in-out;
+}
+
+.generic-phrase {
+    color: #333;
+    font-size: 1.2rem;
+    font-style: italic;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.viewDoctors-button {
+    width: 20%;
+    background: #ffcc80;
+    color: #e65100;
+    font-weight: bold;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 2rem;
+    animation: popUp 1.5s ease-in-out;
+}
+
+.viewDoctors-button:hover {
+    background: #ffb74d;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes popUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+
