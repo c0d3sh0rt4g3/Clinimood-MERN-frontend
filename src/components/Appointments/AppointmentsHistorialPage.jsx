@@ -10,7 +10,6 @@ import "../../style/main.scss"
 import useAuthStore from "../../context/useAuthStore.jsx";
 import {useNavigate} from "react-router-dom";
 import "../../style/main.scss";
-import useAuthStore from '../../context/useAuthStore';
 
 const formatAppointmentDate = (date) => format(new Date(date), "yyyy-MM-dd");
 
@@ -26,7 +25,6 @@ const AppointmentForm = () => {
   const [error, setError] = useState(null);
 
   const today = new Date();
-  const { user } = useAuthStore();
   const navigate = useNavigate()
 
   useEffect(() => {
