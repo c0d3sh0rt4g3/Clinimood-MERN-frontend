@@ -46,9 +46,9 @@ const Navbar = () => {
             <>
               <NavLink to="/history" className="navbar__link">History</NavLink>
               <NavLink to="/new-appointment" className="navbar__link">New appointment</NavLink>
-              <NavLink to="/doctors" className="navbar__link">Doctors</NavLink>
             </>
           )}
+          <NavLink to="/doctors" className="navbar__link">Doctors</NavLink>
         </ul>
 
         <div className="navbar__actions">
