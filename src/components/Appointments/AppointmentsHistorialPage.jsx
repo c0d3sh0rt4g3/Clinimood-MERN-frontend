@@ -27,10 +27,10 @@ const AppointmentForm = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-      // Redirect to home if not logged in
-      if (!user) {
-          navigate('/')
-      }
+    // Redirect to home if not logged in
+    if (!user) {
+        navigate('/')
+    }
     const fetchAppointments = async () => {
       setLoading(true);
       setError(null);
