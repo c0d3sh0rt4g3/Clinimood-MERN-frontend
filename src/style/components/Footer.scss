@@ -1,0 +1,57 @@
+/* 📌 Contenedor principal ocupa el espacio disponible */
+.main-content {
+    flex: 1;
+  }
+  
+  /* 🔻 Footer */
+  .footer {
+    width: 100%;
+    color: white;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+  }
+  
+  /* 🟠 Barra superior del footer */
+  .footer__top {
+    width: 100%;
+    background-color: var(--dark-orange);
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* 📌 Logo */
+  .footer__logo-image {
+    width: 100px;
+  }
+  
+  /* 🔶 Barra inferior del footer */
+  .footer__bottom {
+    width: 100%;
+    background-color: var(--primary-orange);
+    padding: 15px 0;
+  }
+  
+  .footer__text p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+  }
+  
+  .dark-mode .footer {
+    background-color: var(--dark-bg);
+  }
+  
+  .dark-mode .footer__top {
+    background-color: #222;
+  }
+  .dark-mode .footer__bottom {
+    background-color: #333;
+  }

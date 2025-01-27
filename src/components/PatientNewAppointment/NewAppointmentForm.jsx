@@ -6,7 +6,10 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
-import "./NewAppointmentForm.css";
+import "../../style/main.scss"
+import useAuthStore from "../../context/useAuthStore.jsx";
+import {useNavigate} from "react-router-dom";
+import "../../style/main.scss";
 
 const HOLIDAYS = [];
 
@@ -27,9 +30,13 @@ const generateTimes = () => {
   return times;
 };
 
+
 const timeslots = generateTimes();
 
 const AppointmentForm = () => {
+  const { user } = useAuthStore.getState(); 
+  const patientDNI = user ? user.DNI : '';
+
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [formData, setFormData] = useState({
     date: "",
@@ -41,11 +48,13 @@ const AppointmentForm = () => {
   const [loadingDoctors, setLoadingDoctors] = useState(true);
   const [selectedDate, setSelectedDate] = useState("");
   const [appointments, setAppointments] = useState([]);
-
-  // DNI del paciente de prueba
-  const patientDNI = "40123726K";
+  const navigate = useNavigate()
 
   useEffect(() => {
+    // Redirect to home if not logged in
+      if (!user) {
+          navigate('/')
+      }
     const fetchDoctors = async () => {
       try {
         const response = await fetch(
@@ -136,7 +145,7 @@ const AppointmentForm = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ patientDNI }),
+          body: JSON.stringify({ patientDNI })
         }
       );
 
@@ -166,7 +175,7 @@ const AppointmentForm = () => {
 
     const appointmentDate = `${formData.date}T${formData.time}`;
     const appointmentBody = {
-      patientDNI,
+      patientDNI, // Usamos el DNI del paciente
       doctorDNI: formData.doctorDni,
       date: appointmentDate,
       description: formData.description,
@@ -186,10 +195,10 @@ const AppointmentForm = () => {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (!data.success) {
         alert("Appointment created successfully!");
         await updateHistory();
-        window.location.href = "/history";
+        //window.location.href = "/history";
       } else {
         alert("Error creating appointment: " + data.message);
       }
@@ -255,6 +264,12 @@ const AppointmentForm = () => {
   const isFormValid =
     formData.date && formData.doctorDni && formData.time && formData.description;
 
+  if (!user) {
+    // Si el usuario no está logueado, redirigir a la página de login
+    alert("Please log in to make an appointment.");
+    window.location.href = "/login";
+  }
+
   return (
     <div className="appointment-form">
       <h2 className="appointment-form__title">Book an Appointment</h2>
@@ -268,7 +283,7 @@ const AppointmentForm = () => {
             >
               &lt;
             </button>
-            <h3>{format(currentMonth, "MMMM yyyy")}</h3>
+            <h3 className="appointment-form__title">{format(currentMonth, "MMMM yyyy")}</h3>
             <button
               type="button"
               className="appointment-form__month-button"
@@ -290,7 +305,7 @@ const AppointmentForm = () => {
           </div>
         </div>
 
-        <label htmlFor="doctor-select" className="appointment-form__label">
+        <label htmlFor="doctor-select" className="appointment-form__title">
           Doctor
         </label>
         {loadingDoctors ? (
@@ -317,12 +332,12 @@ const AppointmentForm = () => {
 
         {formData.date && formData.doctorDni && (
           <div className="appointment-form__timeslot-container">
-            <h3>
+            <h3 className="appointment-form__title">
               {new Date(formData.date).toLocaleDateString("en-US", {
                 weekday: "long",
                 day: "numeric",
               })}
-            </h3>
+            </h3><div>
             {timeslots.map((time, index) => {
               const isDisabled = isTimeSlotTaken(
                 formData.date,
@@ -349,11 +364,13 @@ const AppointmentForm = () => {
                   {time}
                 </button>
               );
-            })}
+            }
+            )}
+            </div>
           </div>
         )}
 
-        <label htmlFor="description" className="appointment-form__label">
+        <label htmlFor="description" className="appointment-form__title">
           Description
         </label>
         <textarea

@@ -1,0 +1,45 @@
+.appointment-form__timeslot-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.appointment-form__timeslot {
+  padding: 10px;
+  border: 1px solid #6d4c7d;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.appointment-form__timeslot--selected {
+  background-color: #6d4c7d;
+  color: white;
+}
+.appointment-form__select,
+.appointment-form__button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+.appointment-form__button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-orange);
+  color: white;
+  cursor: pointer;
+}
+
+.appointment-form__button--active {
+  background-color: orange; /* Color cuando todos los campos están completos */
+}
+
+.appointment-form__button--active:hover {
+  background-color: rgb(182, 119, 3);
+}
+
+.appointment-form__button:hover {
+  background-color: var(--dark-orange);
+}
