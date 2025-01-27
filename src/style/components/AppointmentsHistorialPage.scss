@@ -1,61 +1,22 @@
-/* General Styling */
+
 .appointment-form {
   font-family: Arial, sans-serif;
-  max-width: 900px;
+  max-width: 800px;
   margin: 20px auto;
   display: flex;
   gap: 20px;
-  background-color: #e8ebf5;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--light-bg);
+  color: var(--light-text);
 }
 
 .appointment-form__title {
   text-align: center;
   font-size: 18px;
-  color: #6d4c7d;
+  color: var(--color-primary);
   margin-bottom: 20px;
-}
-
-/* Calendar Container */
-.appointment-form__calendar-container {
-  flex: 1;
-  text-align: center;
-}
-
-.appointment-form__calendar-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.appointment-form__month-button {
-  background-color: transparent;
-  border: none;
-  color: #6d4c7d;
-  font-size: 20px;
-  cursor: pointer;
-  margin: 0 10px;
-}
-
-.appointment-form__calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-}
-
-.appointment-form__calendar-day,
-.appointment-form__calendar-day-header {
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.appointment-form__calendar-day-header {
-  color: #6d4c7d;
-  font-weight: bold;
 }
 
 .appointment-form__calendar-day--disabled,
@@ -77,7 +38,74 @@
   border: 1px solid #f56363;
 }
 
-/* Appointments List */
+.appointment-form__calendar-container {
+  flex: 1;
+  text-align: center;
+}
+
+.appointment-form__calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.appointment-form__month-button {
+  background-color: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.appointment-form__calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.appointment-form__calendar-day,
+.appointment-form__calendar-day-header {
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  color: var(--light-text);
+}
+
+.appointment-form__calendar-day-header {
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.appointment-form__calendar-day--disabled,
+.appointment-form__calendar-day--weekend {
+  background-color: var(--light-disabled-bg);
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.appointment-form__calendar-day--selected {
+  background-color: var(--light-selected-bg);
+  border: 1px solid #f56363;
+  color: var(--color-primary);
+}
+
+.appointment-form__calendar-day--has-appointment {
+  background-color: var(--color-secondary);
+  color: white;
+  border: 1px solid var(--color-secondary);
+}
+
+.appointment-form__textarea {
+  width: 90%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--light-border);
+  font-size: 14px;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
 .appointment-form__appointments-list {
   flex: 1;
   background-color: #ffffff;
@@ -111,7 +139,7 @@
   border-color: #f56363;
 }
 
-/* Appointment Details */
+
 .appointment-form__appointment-details {
   margin-top: 20px;
   background-color: #f1f1f1;
@@ -131,42 +159,118 @@
   margin: 5px 0;
 }
 
-/* Buttons */
-.appointment-form__button {
-  display: block;
-  margin: 10px auto;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
+
+.dark-mode .appointment-form {
+  background-color: var(--dark-border);
+  color: var(--dark-text);
 }
 
-.appointment-form__button--confirm {
+.dark-mode .appointment-form__title {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__calendar-header {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__month-button {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__calendar-day,
+.dark-mode .appointment-form__calendar-day-header {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__calendar-day--disabled,
+.dark-mode .appointment-form__calendar-day--weekend {
+  background-color: var(--dark-disabled-bg);
+  color: #bbb;
+}
+
+.dark-mode .appointment-form__calendar-day--selected {
+  background-color: var(--dark-selected-bg);
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__calendar-day--has-appointment {
+  background-color: var(--dark-orange);
+  color: white;
+  border: 1px solid var(--dark-orange);
+}
+
+.dark-mode .appointment-form__appointments-list {
+  background-color: #333;
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__appointments-list h3 {
+  color: var(--color-primary);
+}
+
+.dark-mode .appointment-form__appointment-item {
+  border: 1px solid #555;
+}
+
+.dark-mode .appointment-form__appointment-item:hover {
+  background-color: #444;
+}
+
+.dark-mode .appointment-form__appointment-item--selected {
+  background-color: var(--color-secondary);
+  color: white;
+  border-color: var(--color-secondary);
+}
+
+.dark-mode .appointment-form__appointment-details {
+  background-color: #222;
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__appointment-details h3 {
+  color: var(--color-primary);
+}
+
+.dark-mode .appointment-form__appointment-details p {
+  color: var(--dark-text);
+}
+
+
+.dark-mode .appointment-form__button {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__button--confirm {
   background-color: #28a745;
 }
 
-.appointment-form__button--confirm:hover {
+.dark-mode .appointment-form__button--confirm:hover {
   background-color: #218838;
 }
 
-.appointment-form__button--cancel {
+.dark-mode .appointment-form__button--cancel {
   background-color: #dc3545;
 }
 
-.appointment-form__button--cancel:hover {
+.dark-mode .appointment-form__button--cancel:hover {
   background-color: #c82333;
 }
 
-.appointment-form__button--new {
+.dark-mode .appointment-form__button--new {
   background-color: #007bff;
 }
 
-.appointment-form__button--new:hover {
+.dark-mode .appointment-form__button--new:hover {
   background-color: #0056b3;
 }
 
-.appointment-form__calendar-day--empty {
-  background-color: transparent;
+.dark-mode .appointment-form__textarea {
+  background-color: #444;
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.dark-mode .appointment-form__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
 }
