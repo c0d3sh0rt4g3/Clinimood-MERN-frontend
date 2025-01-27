@@ -9,6 +9,7 @@ import {useEffect} from "react"
 const RegisterForm = () => {
     const loginUser = useAuthStore((state) => state.loginUser)
     const navigate = useNavigate()
+    const { user } = useAuthStore()
 
     const validationSchema = Yup.object({
         DNI: Yup.string()
@@ -28,9 +29,8 @@ const RegisterForm = () => {
             .required('You must confirm your password'),
     })
     useEffect(() => {
-        const currentUser = JSON.parse(localStorage.getItem('user'))
         // Redirect to home if logged in
-        if (currentUser) {
+        if (user) {
             navigate('/')
         }
     }, [navigate])

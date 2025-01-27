@@ -12,11 +12,12 @@ const validationSchema = Yup.object({
 
 const LoginForm = () => {
     const loginUser = useAuthStore((state) => state.loginUser)
+    const { user } = useAuthStore();
     const navigate = useNavigate()
+
     useEffect(() => {
-        const currentUser = JSON.parse(localStorage.getItem('user'));
         // Redirect to home if logged in
-        if (currentUser) {
+        if (user) {
             navigate('/')
         }
     }, [navigate])
