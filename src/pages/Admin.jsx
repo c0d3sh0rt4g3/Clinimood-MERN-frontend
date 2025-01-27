@@ -2,12 +2,20 @@ import React, { useEffect, useState } from "react"
 import UserRow from "../components/Admin/UserRow.jsx"
 import axios from "axios"
 import "../style/main.scss"
+import useAuthStore from "../context/useAuthStore.jsx";
+import {useNavigate} from "react-router-dom";
 
 const Admin = () => {
     const [usersData, setUsersData] = useState([])
     const [loading, setLoading] = useState(true)
+    const { user } = useAuthStore();
+    const navigate = useNavigate()
 
     useEffect(() => {
+        // Redirect to the home page if the user hasn't the admin role
+        if (!user || user.role !== "admin") {
+            navigate("/")
+        }
         fetchData()
     }, [])
 

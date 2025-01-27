@@ -6,8 +6,12 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
+import "../../style/main.scss"
+import useAuthStore from "../../context/useAuthStore.jsx";
+import {useNavigate} from "react-router-dom";
 import useAuthStore from '../../context/useAuthStore';
 import "../../style/main.scss";
+>>>>>>> dev
 
 const HOLIDAYS = [];
 
@@ -46,8 +50,14 @@ const AppointmentForm = () => {
   const [loadingDoctors, setLoadingDoctors] = useState(true);
   const [selectedDate, setSelectedDate] = useState("");
   const [appointments, setAppointments] = useState([]);
+  const { user } = useAuthStore();
+  const navigate = useNavigate()
 
   useEffect(() => {
+    // Redirect to home if not logged in
+      if (!user) {
+          navigate('/')
+      }
     const fetchDoctors = async () => {
       try {
         const response = await fetch(

@@ -1,24 +1,41 @@
-import { Formik, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { TextField, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import useAuthStore from "../context/useAuthStore.jsx";
+import { Formik, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import { TextField, Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import useAuthStore from "../context/useAuthStore.jsx"
+import {useEffect} from "react";
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Email not valid').required('Email is required'),
     password: Yup.string().required('Password is required'),
-});
+})
 
 const LoginForm = () => {
-    const loginUser = useAuthStore((state) => state.loginUser);
-    const navigate = useNavigate();
+    const loginUser = useAuthStore((state) => state.loginUser)
+    const { user } = useAuthStore();
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        // Redirect to home if logged in
+        if (user) {
+            navigate('/')
+        }
+    }, [navigate])
 
     const handleSubmit = async (values, { setSubmitting }) => {
         const result = await loginUser(values);
 
         if (result.success) {
-            console.log("Succesful");
-            navigate('/');
+            // Fetch the updated user state after login
+            const updatedUser = useAuthStore.getState().user;
+
+            console.log(updatedUser);
+
+            if (updatedUser.role === "admin") {
+                navigate("/admin");
+            } else {
+                navigate("/");
+            }
         } else {
             console.error("Login error:", result.error);
             alert(result.error || "Unknown error");
@@ -26,6 +43,7 @@ const LoginForm = () => {
 
         setSubmitting(false);
     };
+
 
     return (
         <Formik
@@ -76,14 +94,7 @@ const LoginForm = () => {
                 </form>
             )}
         </Formik>
-    );
-};
+    )
+}
 
-export default LoginForm;
-
-
-
-
-
-
-
+export default LoginForm

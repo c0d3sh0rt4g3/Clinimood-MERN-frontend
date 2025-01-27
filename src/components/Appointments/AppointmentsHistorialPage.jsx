@@ -6,6 +6,9 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
+import "../../style/main.scss"
+import useAuthStore from "../../context/useAuthStore.jsx";
+import {useNavigate} from "react-router-dom";
 import "../../style/main.scss";
 import useAuthStore from '../../context/useAuthStore';
 
@@ -23,10 +26,15 @@ const AppointmentForm = () => {
   const [error, setError] = useState(null);
 
   const today = new Date();
+  const { user } = useAuthStore();
+  const navigate = useNavigate()
 
   useEffect(() => {
+    // Redirect to home if not logged in
+    if (!user) {
+        navigate('/')
+    }
     if (!dni) return;
-
     const fetchAppointments = async () => {
       setLoading(true);
       setError(null);

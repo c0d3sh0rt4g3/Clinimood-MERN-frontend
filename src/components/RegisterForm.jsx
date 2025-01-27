@@ -1,13 +1,15 @@
-import { Formik, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { TextField, Button } from '@mui/material';
-import axios from 'axios';
-import useAuthStore from "../context/useAuthStore.jsx";
-import { useNavigate } from "react-router-dom";
+import { Formik, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import { TextField, Button } from '@mui/material'
+import axios from 'axios'
+import useAuthStore from "../context/useAuthStore.jsx"
+import { useNavigate } from "react-router-dom"
+import {useEffect} from "react"
 
 const RegisterForm = () => {
-    const loginUser = useAuthStore((state) => state.loginUser); // Usamos el hook de login
-    const navigate = useNavigate(); // Para redirigir
+    const loginUser = useAuthStore((state) => state.loginUser)
+    const navigate = useNavigate()
+    const { user } = useAuthStore()
 
     const validationSchema = Yup.object({
         DNI: Yup.string()
@@ -25,15 +27,20 @@ const RegisterForm = () => {
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
             .required('You must confirm your password'),
-    });
+    })
+    useEffect(() => {
+        // Redirect to home if logged in
+        if (user) {
+            navigate('/')
+        }
+    }, [navigate])
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
-            const payload = { ...values, role: "patient" };
-            const response = await axios.post('https://clinimood-mern-backend.onrender.com/users', payload);
-            console.log('User signed up', response.data);
+            const payload = { ...values, role: "patient" }
+            const response = await axios.post('https://clinimood-mern-backend.onrender.com/users', payload)
+            console.log('User signed up', response.data)
 
-            // Después de registrar, hacemos login con los mismos datos
             const loginResult = await loginUser({
                 email: values.email,
                 password: values.password,
@@ -48,12 +55,12 @@ const RegisterForm = () => {
             }
             resetForm()
         } catch (error) {
-            console.log('Error signing up the user', error);
-            alert('Error signing up the user');
+            console.log('Error signing up the user', error)
+            alert('Error signing up the user')
         } finally {
-            setSubmitting(false);
+            setSubmitting(false)
         }
-    };
+    }
 
     return (
         <Formik
@@ -65,7 +72,6 @@ const RegisterForm = () => {
                 <form className="auth-form-container" onSubmit={handleSubmit}>
                     <h1>Registro</h1>
 
-                    {/* Campo DNI */}
                     <Field name="DNI">
                         {({ field }) => (
                             <TextField
@@ -80,7 +86,6 @@ const RegisterForm = () => {
                     </Field>
                     <ErrorMessage name="DNI" component="div" className="error" />
 
-                    {/* Campo Name */}
                     <Field name="name">
                         {({ field }) => (
                             <TextField
@@ -95,7 +100,6 @@ const RegisterForm = () => {
                     </Field>
                     <ErrorMessage name="name" component="div" className="error" />
 
-                    {/* Campo Email */}
                     <Field name="email">
                         {({ field }) => (
                             <TextField
@@ -110,7 +114,6 @@ const RegisterForm = () => {
                     </Field>
                     <ErrorMessage name="email" component="div" className="error" />
 
-                    {/* Campo Password */}
                     <Field name="password">
                         {({ field }) => (
                             <TextField
@@ -125,7 +128,6 @@ const RegisterForm = () => {
                     </Field>
                     <ErrorMessage name="password" component="div" className="error" />
 
-                    {/* Campo Confirm Password */}
                     <Field name="confirmPassword">
                         {({ field }) => (
                             <TextField
@@ -140,7 +142,6 @@ const RegisterForm = () => {
                     </Field>
                     <ErrorMessage name="confirmPassword" component="div" className="error" />
 
-                    {/* Botón de envío */}
                     <Button
                         type="submit"
                         variant="contained"
@@ -152,10 +153,10 @@ const RegisterForm = () => {
                 </form>
             )}
         </Formik>
-    );
-};
+    )
+}
 
-export default RegisterForm;
+export default RegisterForm
 
 
 
