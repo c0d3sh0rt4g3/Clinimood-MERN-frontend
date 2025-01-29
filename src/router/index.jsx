@@ -13,6 +13,7 @@ import PrivateLayout from "../layouts/PrivateLayout.jsx";
 import Admin from "../pages/Admin.jsx";
 import ContactForm from "../components/ContactForm.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
+import PasswordRecovery from "../pages/PasswordRecovery.jsx";
 
 export const router = createBrowserRouter([
   {
