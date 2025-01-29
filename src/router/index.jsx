@@ -12,6 +12,7 @@ import Doctors from "../pages/Doctors.jsx";
 import PrivateLayout from "../layouts/PrivateLayout.jsx";
 import Admin from "../pages/Admin.jsx";
 import ContactForm from "../components/ContactForm.jsx";
+import ProfilePage from "../pages/ProfilePage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: "history", 
         element: <PatientMedicalHistory />, 
+      },
+      {
+        path: "profile",
+        element: <ProfilePage/>
       },
       {
         path: "doctors",
