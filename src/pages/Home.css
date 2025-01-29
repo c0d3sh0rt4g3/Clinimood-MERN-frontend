@@ -2,33 +2,38 @@
 .home-container {
     min-height: 100vh;
     background: linear-gradient(to bottom, #ff7e00, #6a0dad);
-    font-family: Calibri;
-    display: flex; /* Cambia el diseño a flexbox */
-    flex-direction: row; /* Coloca los elementos en una fila */
-    justify-content: space-between; /* Espacio entre el contenido y la imagen */
-    align-items: center; /* Alinea verticalmente el contenido */
-    padding: 1rem;
+    font-family: Calibri, sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; /* Alinea el contenido a la izquierda */
+    align-items: center;
+    padding: 1rem 8%;
+    gap: 3rem; /* Espaciado entre el contenido y la imagen */
 }
 
 .content-wrapper {
-    max-width: 50%; /* Limita el ancho del contenido textual */
+    width: 70%;
+    text-align: left; /* Asegura que el texto se mantenga alineado a la izquierda */
 }
 
 .image-container {
-    max-width: 45%; /* Limita el ancho de la imagen */
-    height: 80vh; /* Define la altura máxima de la imagen */
+    width: 300vh;
+    height: 80vh;
+    margin-left: auto; /* Empuja la imagen completamente hacia la derecha */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Asegura que la imagen se alinee bien */
 }
 
 .right-image {
-    object-fit: cover; /* Asegura que la imagen se recorte para cubrir el área */
-    width: 100%; /* La imagen ocupa el 100% del ancho del contenedor */
-    height: 100%; /* La imagen ocupará el 100% de la altura disponible */
-    border-radius: 1rem; /* Bordes redondeados */
-    animation: fadeIn 1.5s ease-in-out; /* Animación de aparición */
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 .header-text {
-    width: 100%;
     color: white;
     font-size: 4rem;
     font-weight: lighter;
@@ -36,7 +41,6 @@
 }
 
 .subheader {
-    width: 100%;
     color: white;
     font-size: 1.4rem;
     font-weight: lighter;
@@ -51,7 +55,7 @@
 }
 
 .viewDoctors-button {
-    width: 20%;
+    width: fit-content;
     background: #ffcc80;
     color: #e65100;
     font-weight: bold;
@@ -68,7 +72,7 @@
     background: #ffb74d;
 }
 
-/* Animations */
+/* Animaciones */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -99,6 +103,7 @@
         opacity: 1;
     }
 }
+
 
 
 
