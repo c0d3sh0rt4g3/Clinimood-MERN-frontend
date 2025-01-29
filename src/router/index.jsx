@@ -33,6 +33,10 @@ export const router = createBrowserRouter([
         element: <Register />, 
       },
       {
+        path: "password-recovery",
+        element: <PasswordRecovery />,
+      },
+      {
         path: "new-appointment", 
         element: <PatientNewAppointments />, 
       },
