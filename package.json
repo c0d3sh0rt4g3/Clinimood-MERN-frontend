@@ -22,6 +22,7 @@
     "react-router-dom": "^6.4",
     "sass": "^1.83.4",
     "scss": "^0.2.4",
+    "sweetalert2": "^11.15.10",
     "yup": "^1.0.0",
     "zustand": "^4.4.0"
   },
