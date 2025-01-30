@@ -13,6 +13,7 @@ import PrivateLayout from "../layouts/PrivateLayout.jsx";
 import Admin from "../pages/Admin.jsx";
 import ContactForm from "../components/ContactForm.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
+import DoctorAppointmentsPage from "../pages/DoctorAppointmentsPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "doctors",
         element: <Doctors/>
+      },
+      {
+        path: "doctor-appointments",
+        element: <DoctorAppointmentsPage/>
       },
       {
         path: "contact",

@@ -3,6 +3,7 @@
 @use './components/Navbar.scss';
 @use './components/Footer.scss';
 @use "./components/Admin.scss";
+@use "./pages/DoctorAppointmentsPage.scss";
 
 :root{
     --color-primary: #70348A;

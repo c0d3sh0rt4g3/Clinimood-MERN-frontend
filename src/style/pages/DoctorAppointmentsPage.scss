@@ -1,0 +1,223 @@
+/* General Styles */
+.appointments {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--light-bg);
+    color: var(--light-text);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode */
+.dark-mode .appointments {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+/* Header */
+.appointments__header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Filters */
+.appointments__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--light-header-bg);
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .appointments__filters {
+    background-color: var(--dark-header-bg);
+}
+
+.appointments__filters-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+}
+
+.appointments__filters-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Filter Inputs */
+.appointments__filters-input {
+    padding: 10px;
+    border: 1px solid var(--light-border);
+    border-radius: 5px;
+    background-color: var(--light-day-bg);
+    color: var(--light-text);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.appointments__filters-input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+.dark-mode .appointments__filters-input {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+    border: 1px solid var(--dark-border);
+}
+
+/* Filter Button */
+.appointments__filters-button {
+    padding: 10px 15px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+}
+
+.appointments__filters-button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+/* Appointment List */
+.appointments__list {
+    list-style: none;
+    padding: 0;
+}
+
+.appointments__item {
+    padding: 15px;
+    border: 1px solid var(--light-border);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: var(--light-day-bg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.appointments__item:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dark-mode .appointments__item {
+    background-color: var(--dark-day-bg);
+    border: 1px solid var(--dark-border);
+}
+
+/* Appointment Details */
+.appointments__item-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.appointments__item-text {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.appointments__item-status {
+    font-weight: bold;
+    color: var(--color-secondary);
+}
+
+/* Download Button */
+.appointments__download-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-orange);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.appointments__download-button:hover {
+    background-color: var(--dark-orange);
+}
+
+/* Date Picker Styling */
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.react-datepicker__input-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--light-border);
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: var(--light-header-bg);
+    color: var(--light-text);
+}
+
+.dark-mode .react-datepicker__input-container input {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+    border: 1px solid var(--dark-border);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .appointments__filters {
+        flex-direction: column;
+    }
+}
+
+// main.scss (o el archivo de estilos que estés utilizando)
+
+.appointments__list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .appointments__item {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+  }
+  
+  .appointments__item-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .appointments__item-text {
+    font-size: 16px;
+  }
+  
+  .appointments__edit-input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+  }
+  
+  button {
+    padding: 10px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
