@@ -18,6 +18,12 @@ import {
 } from '../../assets/apiService';
 
 
+//import "../../style/main.scss"
+//import useAuthStore from "../../context/useAuthStore.jsx";
+//import {useNavigate} from "react-router-dom";
+//import "../../style/main.scss";
+
+
 const formatAppointmentDate = (date) => format(new Date(date), "yyyy-MM-dd");
 
 const AppointmentForm = () => {
@@ -34,6 +40,7 @@ const AppointmentForm = () => {
   const [operationLoading, setOperationLoading] = useState(false);
 
   const today = new Date();
+  const navigate = useNavigate()
 
   const fetchAppointments = async () => {
     setLoading(true);
@@ -55,6 +62,10 @@ const AppointmentForm = () => {
   };
 
   useEffect(() => {
+    // Redirect to home if not logged in
+    if (!user) {
+        navigate('/')
+    }
     if (!dni) return;
     fetchAppointments();
   }, [dni]);
@@ -71,6 +82,7 @@ const AppointmentForm = () => {
     if (selectedAppointments.length === 0) return;
   
     const fetchDoctorsDetails = async () => {
+
       setLoading(true);
       setDoctorDetails({});
       setDoctorError(null);

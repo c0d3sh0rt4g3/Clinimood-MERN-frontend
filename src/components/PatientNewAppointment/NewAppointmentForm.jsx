@@ -6,6 +6,7 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
+
 import useAuthStore from '../../context/useAuthStore';
 import Swal from "sweetalert2";
 import {
@@ -14,6 +15,10 @@ import {
   createAppointment,
   updateMedicalHistory,
 } from "../../assets/apiService";
+
+//import useAuthStore from "../../context/useAuthStore.jsx";
+//import {useNavigate} from "react-router-dom";
+
 import "../../style/main.scss";
 
 const HOLIDAYS = [];
@@ -52,9 +57,17 @@ const AppointmentForm = () => {
   const [loadingDoctors, setLoadingDoctors] = useState(true);
   const [selectedDate, setSelectedDate] = useState("");
   const [appointments, setAppointments] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const loadData = async () => {
+
+    // Redirect to home if not logged in
+     // if (!user) {
+      //    navigate('/')
+     // }
+    //const fetchDoctors = async () => {
+
       try {
         const doctorsData = await fetchDoctors();
         if (doctorsData.success) {
