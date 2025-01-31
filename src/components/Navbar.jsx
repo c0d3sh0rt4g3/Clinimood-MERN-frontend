@@ -44,8 +44,20 @@ const Navbar = () => {
           <NavLink to="/contact" className="navbar__link">Contact</NavLink>
           {user && (
             <>
-              <NavLink to="/history" className="navbar__link">History</NavLink>
-              <NavLink to="/new-appointment" className="navbar__link">New appointment</NavLink>
+              {/* Mostrar enlaces específicos para pacientes */}
+              {user.role === 'patient' && (
+                <>
+                  <NavLink to="/history" className="navbar__link">History</NavLink>
+                  <NavLink to="/new-appointment" className="navbar__link">New appointment</NavLink>
+                </>
+              )}
+              {/* Mostrar enlaces específicos para doctores */}
+              {user.role === 'doctor' && (
+                <>
+                  <NavLink to="/doctor-appointments" className="navbar__link">Appointments</NavLink>
+                  <NavLink to="/doctor-patients" className="navbar__link">Patients</NavLink>
+                </>
+              )}
             </>
           )}
           <NavLink to="/doctors" className="navbar__link">Doctors</NavLink>

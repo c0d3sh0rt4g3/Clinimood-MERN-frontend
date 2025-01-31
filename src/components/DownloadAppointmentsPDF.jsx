@@ -1,5 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { format, parseISO } from "date-fns"; // Importa format y parseISO
 
 const DownloadAppointmentsPDF = ({ appointments, patientDetails }) => {
   const generatePDF = () => {
@@ -8,19 +9,20 @@ const DownloadAppointmentsPDF = ({ appointments, patientDetails }) => {
     doc.text("Doctor Appointments", 14, 10);
 
     const tableData = appointments.map((appt) => {
-        const patientInfo = patientDetails[appt.patientDNI] || {};
-        return [
-          appt.date,
-          appt.description,
-          appt.status,
-          patientInfo.name || "N/A",
-          patientInfo.phone || "N/A",
-        ];
-      });
-      
+      const patientInfo = patientDetails[appt.patientDNI] || {};
+      return [
+        format(parseISO(appt.date), "yyyy-MM-dd HH:mm"), // Formatea la fecha
+        appt.description,
+        appt.status,
+        patientInfo.DNI || "N/A",
+        patientInfo.name || "N/A",
+        patientInfo.phone || "N/A",
+        
+      ];
+    });
 
     autoTable(doc, {
-      head: [["Date", "Description", "Status", "Patient Name", "Phone"]],
+      head: [["Date", "Description", "Status", "DNI", "Patient Name", "Phone"]],
       body: tableData,
       startY: 20,
     });

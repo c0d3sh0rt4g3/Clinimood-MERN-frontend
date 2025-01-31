@@ -5,8 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
 import "../style/main.scss";
-import DownloadAppointmentsPDF from "./DownloadAppointmentsPDF"; // Ajusta la ruta según tu estructura
-
+import DownloadAppointmentsPDF from "./DownloadAppointmentsPDF";
 
 const AppointmentsList = ({ doctorDNI }) => {
   const [appointments, setAppointments] = useState([]);
@@ -16,7 +15,7 @@ const AppointmentsList = ({ doctorDNI }) => {
   const [patientDetails, setPatientDetails] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all"); // Nuevo estado para el filtro de estado
+  const [statusFilter, setStatusFilter] = useState("all");
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -29,6 +28,24 @@ const AppointmentsList = ({ doctorDNI }) => {
         if (response.success) {
           setAppointments(response.data);
           setFilteredAppointments(response.data);
+
+          // Cargar detalles de todos los pacientes
+          const patientDNIs = response.data.map((appt) => appt.patientDNI);
+          const uniquePatientDNIs = [...new Set(patientDNIs)]; // Eliminar duplicados
+
+          const details = {};
+          for (const dni of uniquePatientDNIs) {
+            try {
+              const patientResponse = await fetchDoctorDetails(dni);
+              if (patientResponse) {
+                details[dni] = patientResponse.data;
+              }
+            } catch (err) {
+              console.error(`Error fetching details for patient ${dni}:`, err);
+            }
+          }
+
+          setPatientDetails(details);
         } else {
           setError("Failed to fetch appointments.");
         }
@@ -43,7 +60,6 @@ const AppointmentsList = ({ doctorDNI }) => {
   }, [doctorDNI]);
 
   useEffect(() => {
-    // Filtrar las citas por estado
     const filterByStatus = () => {
       let filtered = appointments;
       if (statusFilter !== "all") {
@@ -54,19 +70,6 @@ const AppointmentsList = ({ doctorDNI }) => {
 
     filterByStatus();
   }, [appointments, statusFilter]);
-
-  const fetchPatientInfo = async (patientDNI) => {
-    if (patientDetails[patientDNI]) return;
-
-    try {
-      const response = await fetchDoctorDetails(patientDNI);
-      if (response) {
-        setPatientDetails((prev) => ({ ...prev, [patientDNI]: response.data }));
-      }
-    } catch (err) {
-      console.error("Error fetching patient details:", err);
-    }
-  };
 
   const filterByDate = (date) => {
     if (!date) return;
@@ -94,7 +97,6 @@ const AppointmentsList = ({ doctorDNI }) => {
       setAppointments((prev) =>
         prev.map((appt) => (appt._id === apptId ? { ...appt, ...updatedData } : appt))
       );
-      // Mostrar el mensaje de éxito con SweetAlert2
       Swal.fire({
         title: 'Appointment Updated!',
         text: 'The appointment description has been updated successfully.',
@@ -140,7 +142,6 @@ const AppointmentsList = ({ doctorDNI }) => {
         />
       </div>
 
-      {/* Filtro de estado */}
       <div className="appointments__filters">
         <h2>Filter by Status</h2>
         <select 
@@ -164,11 +165,29 @@ const AppointmentsList = ({ doctorDNI }) => {
             filteredAppointments.map((appt) => (
               <li key={appt._id} className="appointments__item">
                 <h3 className="appointments__item-title">Appointment Details</h3>
-                <p><strong>Date:</strong> {format(parseISO(appt.date), "yyyy-MM-dd HH:mm")}</p>
+                <p><strong>Date:</strong> {format(parseISO(appt.date), "yyyy-MM-dd")}</p>
+                <p><strong>Hour:</strong> {format(parseISO(appt.date), "HH:mm")}</p>
 
+                {patientDetails[appt.patientDNI] ? (
+                  <div>
+                    <p><strong>DNI:</strong> {patientDetails[appt.patientDNI].DNI}</p>
+                    <p><strong>Name:</strong> {patientDetails[appt.patientDNI].name}</p>
+                    {patientDetails[appt.patientDNI].phone && (
+                      <p><strong>Phone:</strong> {patientDetails[appt.patientDNI].phone}</p>
+                      
+                    )}
+                    {patientDetails[appt.patientDNI].address && (
+                      <p><strong>Address:</strong> {patientDetails[appt.patientDNI].address}</p>
+
+                    )}
+                  </div>
+                ) : (
+                  <p>Loading patient details...</p>
+                )}
                 <label>
                   <strong>Description:</strong>
                   <input
+                    className="appointments__item-description-input"
                     type="text"
                     value={appt.description}
                     onChange={(e) => {
@@ -181,34 +200,33 @@ const AppointmentsList = ({ doctorDNI }) => {
                   />
                 </label>
 
-                <p><strong>Status:</strong> {appt.status}</p>
+                <p>
+                  <strong>Status:</strong> 
+                  <span className={`appointments__item-status appointments__item-status--${appt.status}`}>
+                    {appt.status}
+                  </span>
+                </p>
 
-                <button onClick={() => handleUpdate(appt._id, appt.description)}>
+                <button 
+                  className="appointments__item-button appointments__item-button--confirm"
+                  onClick={() => handleUpdate(appt._id, appt.description)}
+                >
                   Confirm & Complete
                 </button>
 
-                {patientDetails[appt.patientDNI] ? (
-                  <div>
-                    <p><strong>Name:</strong> {patientDetails[appt.patientDNI].name}</p>
-                    {patientDetails[appt.patientDNI].phone && (
-                      <p><strong>Phone:</strong> {patientDetails[appt.patientDNI].phone}</p>
-                    )}
-                  </div>
-                ) : (
-                  <button onClick={() => fetchPatientInfo(appt.patientDNI)}>
-                    Load Patient Details
-                  </button>
-                )}
+                
               </li>
             ))
           ) : (
             <p>No appointments found.</p>
           )}
         </ul>
-        
       )}
-  <DownloadAppointmentsPDF className="appointments__download-button" appointments={filteredAppointments} />
-  </div>
+      <DownloadAppointmentsPDF
+        appointments={filteredAppointments}
+        patientDetails={patientDetails}
+      />
+    </div>
   );
 };
 

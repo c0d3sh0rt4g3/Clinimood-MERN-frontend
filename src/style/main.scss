@@ -4,30 +4,10 @@
 @use './components/Footer.scss';
 @use "./components/Admin.scss";
 @use "./pages/DoctorAppointmentsPage.scss";
+@use "./Variable.scss";
 
 :root{
-    --color-primary: #70348A;
-    --color-secondary: #F58524;
-    --primary-orange: #f39c12;
-    --dark-orange: #e67e22;
-    --dark-bg: #121212;
-    --dark-text: #ffffff;
-
-  --light-bg: #e8ebf5; 
-  --light-text: #333;
-  --light-header-bg: #fff;
-  --light-border: #ddd;
-  --light-day-bg: #fff;
-  --light-disabled-bg: #f4f4f4;
-  --light-selected-bg: #fcf2f2; 
-
-  --dark-bg: #121212;
-  --dark-text: #ffffff;
-  --dark-header-bg: #2c2c2c;
-  --dark-border: #555;
-  --dark-day-bg: #333; 
-  --dark-disabled-bg: #444;
-  --dark-selected-bg: #f56363; 
+   
   * {
     transition: all 0.3s ease;
   }
