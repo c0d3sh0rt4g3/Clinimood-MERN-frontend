@@ -3,7 +3,6 @@ import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import useAuthStore from "../context/useAuthStore.jsx"
 import {useEffect} from "react";
-import "../style/components/LoginForm.scss"
 import {Button, TextField} from "@mui/material";
 const validationSchema = Yup.object({
     email: Yup.string().email('Email not valid').required('Email is required'),
@@ -46,8 +45,8 @@ const LoginForm = () => {
 
 
     return (
-        <div className="login-container">
-            <div className="login-box">
+        <div className="form-container">
+            <div className="form-box">
                 <h1>LOGIN</h1>
                 <Formik
                     initialValues={{ email: '', password: '' }}
@@ -89,7 +88,7 @@ const LoginForm = () => {
                             <Button
                                 type="submit"
                                 variant="contained"
-                                className="login-button"
+                                className="form-button"
                                 disabled={isSubmitting}
                                 fullWidth
                             >
@@ -98,7 +97,7 @@ const LoginForm = () => {
                         </form>
                     )}
                 </Formik>
-                <p className="register-link">
+                <p className="form-links">
                     Don’t have an account? <a href="/register">Sign up</a>
                 </p>
             </div>
@@ -106,4 +105,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm
+export default LoginForm;
