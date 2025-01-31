@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
+
 const getValidationSchema = (isVerificationStep) =>
   Yup.object({
     email: Yup.string().email('Invalid email format').required('Email is required'),
@@ -68,59 +69,61 @@ const PasswordRecovery = () => {
   };
 
   return (
-    <Formik
-      initialValues={{ email: '', verificationCode: '', password: '', confirmPassword: '' }}
-      validationSchema={getValidationSchema(isVerificationStep)}
-      onSubmit={handleSubmit}
-    >
-      {({ isSubmitting, handleSubmit }) => (
-        <form className="auth-form-container" onSubmit={handleSubmit}>
-          <h1>{isVerificationStep ? 'Reset Your Password' : 'Password Recovery'}</h1>
+      <div className="form-container recovery-page">
+        <div className="form-box">
+          <Formik
+              initialValues={{ email: '', verificationCode: '', password: '', confirmPassword: '' }}
+              validationSchema={getValidationSchema(isVerificationStep)}
+              onSubmit={handleSubmit}
+          >
+            {({ isSubmitting, handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <h1>{isVerificationStep ? 'Reset Your Password' : 'Password Recovery'}</h1>
 
-          {/* Email Step */}
-          {!isVerificationStep && (
-            <>
-              <Field name="email">
-                {({ field }) => (
-                  <TextField {...field} type="email" label="Email" variant="outlined" margin="normal" fullWidth />
-                )}
-              </Field>
-              <ErrorMessage name="email" component="div" className="error" />
-            </>
-          )}
+                  {!isVerificationStep && (
+                      <>
+                        <Field name="email">
+                          {({ field }) => (
+                              <TextField {...field} type="email" label="Email" variant="outlined" margin="normal" fullWidth className="input-field" />
+                          )}
+                        </Field>
+                        <ErrorMessage name="email" component="div" className="error-message" />
+                      </>
+                  )}
 
-          {/* Verification Step */}
-          {isVerificationStep && (
-            <>
-              <Field name="verificationCode">
-                {({ field }) => (
-                  <TextField {...field} type="text" label="Verification Code" variant="outlined" margin="normal" fullWidth />
-                )}
-              </Field>
-              <ErrorMessage name="verificationCode" component="div" className="error" />
+                  {isVerificationStep && (
+                      <>
+                        <Field name="verificationCode">
+                          {({ field }) => (
+                              <TextField {...field} type="text" label="Verification Code" variant="outlined" margin="normal" fullWidth className="input-field" />
+                          )}
+                        </Field>
+                        <ErrorMessage name="verificationCode" component="div" className="error-message" />
 
-              <Field name="password">
-                {({ field }) => (
-                  <TextField {...field} type="password" label="New Password" variant="outlined" margin="normal" fullWidth />
-                )}
-              </Field>
-              <ErrorMessage name="password" component="div" className="error" />
+                        <Field name="password">
+                          {({ field }) => (
+                              <TextField {...field} type="password" label="New Password" variant="outlined" margin="normal" fullWidth className="input-field" />
+                          )}
+                        </Field>
+                        <ErrorMessage name="password" component="div" className="error-message" />
 
-              <Field name="confirmPassword">
-                {({ field }) => (
-                  <TextField {...field} type="password" label="Confirm Password" variant="outlined" margin="normal" fullWidth />
-                )}
-              </Field>
-              <ErrorMessage name="confirmPassword" component="div" className="error" />
-            </>
-          )}
+                        <Field name="confirmPassword">
+                          {({ field }) => (
+                              <TextField {...field} type="password" label="Confirm Password" variant="outlined" margin="normal" fullWidth className="input-field" />
+                          )}
+                        </Field>
+                        <ErrorMessage name="confirmPassword" component="div" className="error-message" />
+                      </>
+                  )}
 
-          <Button type="submit" variant="contained" disabled={isSubmitting} fullWidth>
-            {isSubmitting ? '...' : isVerificationStep ? 'Reset Password' : 'Send Recovery Link'}
-          </Button>
-        </form>
-      )}
-    </Formik>
+                  <Button type="submit" variant="contained" disabled={isSubmitting} fullWidth className="form-button">
+                    {isSubmitting ? '...' : isVerificationStep ? 'Reset Password' : 'Send Recovery Link'}
+                  </Button>
+                </form>
+            )}
+          </Formik>
+        </div>
+      </div>
   );
 };
 

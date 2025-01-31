@@ -31,67 +31,79 @@ const ContactForm = () => {
             onSubmit={handleSubmit}
         >
             {({ isSubmitting }) => (
-                <form className="contact-form-container">
-                    <h1>Contact Us</h1>
+                <form className="form-container">
+                    <div className="form-box">
+                        <h1>Contact Us</h1>
 
-                    <Field name="fullName">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                label="Full Name"
-                                variant="outlined"
-                                margin="normal"
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="fullName" component="div" className="error" />
+                        <Field name="fullName">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    label="Full Name"
+                                    variant="outlined"
+                                    margin="normal"
+                                    className="input-field"
+                                    fullWidth
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="fullName" component="div" className="error-message" />
 
-                    <Field name="email">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                type="email"
-                                label="Email"
-                                variant="outlined"
-                                margin="normal"
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="email" component="div" className="error" />
+                        <Field name="email">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    type="email"
+                                    label="Email"
+                                    variant="outlined"
+                                    margin="normal"
+                                    className="input-field"
+                                    fullWidth
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="email" component="div" className="error-message" />
 
-                    <Field name="telephone">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                label="Telephone Number"
-                                variant="outlined"
-                                margin="normal"
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="telephone" component="div" className="error" />
+                        <Field name="telephone">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    label="Telephone Number"
+                                    variant="outlined"
+                                    margin="normal"
+                                    className="input-field"
+                                    fullWidth
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="telephone" component="div" className="error-message" />
 
-                    <Field name="message">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                label="Message"
-                                variant="outlined"
-                                margin="normal"
-                                multiline
-                                rows={4}
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="message" component="div" className="error" />
+                        <Field name="message">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    label="Message"
+                                    variant="outlined"
+                                    margin="normal"
+                                    multiline
+                                    rows={6}
+                                    className="input-field"
+                                    fullWidth
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="message" component="div" className="error-message" />
 
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? 'Submitting...' : 'Send Message'}
-                    </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            disabled={isSubmitting}
+                            className="form-button"
+                            fullWidth
+                        >
+                            {isSubmitting ? 'Submitting...' : 'Send Message'}
+                        </Button>
+                    </div>
                 </form>
             )}
         </Formik>
