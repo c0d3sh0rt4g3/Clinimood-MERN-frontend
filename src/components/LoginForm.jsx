@@ -1,7 +1,7 @@
 import { Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { TextField, Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import useAuthStore from "../context/useAuthStore.jsx"
 import {useEffect} from "react";
 
@@ -82,7 +82,8 @@ const LoginForm = () => {
                         )}
                     </Field>
                     <ErrorMessage name="password" component="div" className="error" />
-
+                    <p>You dont have an account? <NavLink to="/register">Create one!</NavLink></p>
+                    <p>Did you forget your password? <NavLink to="/password-recovery">Click here</NavLink></p>
                     <Button
                         type="submit"
                         variant="contained"

@@ -13,6 +13,7 @@ import PrivateLayout from "../layouts/PrivateLayout.jsx";
 import Admin from "../pages/Admin.jsx";
 import ContactForm from "../components/ContactForm.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
+import PasswordRecovery from "../pages/PasswordRecovery.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "register", 
         element: <Register />, 
+      },
+      {
+        path: "password-recovery",
+        element: <PasswordRecovery />,
       },
       {
         path: "new-appointment", 
