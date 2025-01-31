@@ -27,7 +27,7 @@
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: var(--primary-orange);
+  background-color: #6d4c7d;
   color: white;
   cursor: pointer;
 }
@@ -40,6 +40,17 @@
   background-color: rgb(182, 119, 3);
 }
 
-.appointment-form__button:hover {
+.appointment-form__button--default:hover {
   background-color: var(--dark-orange);
+}
+.appointment-form{
+  
+  display: flex;
+  flex-wrap: wrap;
+  
+
+}
+.appointment-form__form{
+  width: 100%;
+
 }

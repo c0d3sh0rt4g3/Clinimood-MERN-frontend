@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import { TextField, Button } from '@mui/material'
 import axios from 'axios'
 import useAuthStore from "../context/useAuthStore.jsx"
-import { useNavigate } from "react-router-dom"
+import {NavLink, useNavigate} from "react-router-dom"
 import {useEffect} from "react"
 
 const RegisterForm = () => {
@@ -141,7 +141,7 @@ const RegisterForm = () => {
                         )}
                     </Field>
                     <ErrorMessage name="confirmPassword" component="div" className="error" />
-
+                    <p>Do you already have an account? <NavLink to="/login">Login!</NavLink></p>
                     <Button
                         type="submit"
                         variant="contained"
@@ -150,6 +150,7 @@ const RegisterForm = () => {
                     >
                         {isSubmitting ? 'Registrando...' : 'Registrarse'}
                     </Button>
+
                 </form>
             )}
         </Formik>
