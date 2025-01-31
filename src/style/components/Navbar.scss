@@ -87,9 +87,14 @@ body {
 }
 
 .navbar__button--logout {
-  color: red;
+  color: var(--primary-orange);
   font-weight: bold;
 }
+
+.navbar__button--logout:hover {
+  color: var(--dark-orange);
+}
+
 
 
 .navbar__profile-icon {

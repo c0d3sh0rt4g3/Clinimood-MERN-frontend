@@ -81,3 +81,14 @@ export const cancelAppointment = async (appointmentId) => {
     throw error;
   }
 };
+
+export const updateAppointment = async (appointmentId, updatedData) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/appointments/${appointmentId}`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating appointment:", error);
+    return null;
+  }
+};
+

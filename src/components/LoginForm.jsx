@@ -1,11 +1,9 @@
 import { Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { TextField, Button } from '@mui/material'
 import {NavLink, useNavigate} from 'react-router-dom'
 import useAuthStore from "../context/useAuthStore.jsx"
 import {useEffect} from "react";
-import "../style/components/Forms.scss"
-
+import {Button, TextField} from "@mui/material";
 const validationSchema = Yup.object({
     email: Yup.string().email('Email not valid').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -47,71 +45,68 @@ const LoginForm = () => {
 
 
     return (
-        <div className="form-container login-page"> {/* Contenedor principal con estilos generales */}
-            <div className="form-box"> {/* Caja con sombras, padding y animación */}
+        <div className="form-container">
+            <div className="form-box">
                 <h1>LOGIN</h1>
-
                 <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{email: '', password: ''}}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
-                    {({ isSubmitting, handleSubmit }) => (
+                    {({isSubmitting, handleSubmit}) => (
                         <form onSubmit={handleSubmit}>
-                            <div className="input-field"> {/* Aplicando estilos a los inputs */}
-                                <Field name="email">
-                                    {({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            type="email"
-                                            label="Email"
-                                            variant="outlined"
-                                            margin="normal"
-                                            fullWidth
-                                        />
-                                    )}
-                                </Field>
-                                <ErrorMessage name="email" component="div" className="error-message" />
-                            </div>
+                            <Field name="email">
+                                {({field}) => (
+                                    <TextField
+                                        {...field}
+                                        type="email"
+                                        label="Email / DNI"
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        className="input-field"
+                                    />
+                                )}
+                            </Field>
+                            <ErrorMessage name="email" component="div" className="error-message"/>
 
-                            <div className="input-field">
-                                <Field name="password">
-                                    {({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            type="password"
-                                            label="Password"
-                                            variant="outlined"
-                                            margin="normal"
-                                            fullWidth
-                                        />
-                                    )}
-                                </Field>
-                                <ErrorMessage name="password" component="div" className="error-message" />
-                            </div>
-
-                            <p className="form-links">
-                                You don´t have an account? <NavLink to="/register">Create one!</NavLink>
-                            </p>
-                            <p className="form-links">
-                                Did you forget your password? <NavLink to="/password-recovery">Click here</NavLink>
-                            </p>
+                            <Field name="password">
+                                {({field}) => (
+                                    <TextField
+                                        {...field}
+                                        type="password"
+                                        label="Password"
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        className="input-field"
+                                    />
+                                )}
+                            </Field>
+                            <ErrorMessage name="password" component="div" className="error-message"/>
 
                             <Button
                                 type="submit"
-                                className="form-button"
                                 variant="contained"
+                                className="form-button"
                                 disabled={isSubmitting}
                                 fullWidth
                             >
-                                {isSubmitting ? '...' : 'Login'}
+                                {isSubmitting ? '...' : 'LOGIN'}
                             </Button>
                         </form>
                     )}
                 </Formik>
+                <p className="form-links">
+                    Don’t have an account? <a href="/register">Sign up</a>
+                </p>
+
+                <p className="form-links">
+                    Did you forget your password? <NavLink to="/password-recovery">Click here</NavLink>
+                </p>
             </div>
         </div>
-    );
+    )
 }
 
-export default LoginForm
+export default LoginForm;
