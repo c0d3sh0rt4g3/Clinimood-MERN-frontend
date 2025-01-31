@@ -1,0 +1,28 @@
+@use './components/AppointmentsHistorialPage.scss';
+@use './components/NewAppointmentForm.scss';
+@use './components/Navbar.scss';
+@use './components/Footer.scss';
+@use "./components/Admin.scss";
+@use "./pages/DoctorAppointmentsPage.scss";
+@use "./Variable.scss";
+@use "./components/Forms.scss";
+:root{
+   
+  * {
+    transition: all 0.3s ease;
+  }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: var(--dark-text);
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #ff7e00, #6a0dad);
+      }
+      
+      
+.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+}

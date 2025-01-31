@@ -6,7 +6,20 @@ import {
   startOfMonth,
   endOfMonth,
 } from "date-fns";
-import "./NewAppointmentForm.css";
+
+import useAuthStore from '../../context/useAuthStore';
+import Swal from "sweetalert2";
+import {
+  fetchDoctors,
+  fetchAppointments,
+  createAppointment,
+  updateMedicalHistory,
+} from "../../assets/apiService";
+
+//import useAuthStore from "../../context/useAuthStore.jsx";
+import {useNavigate} from "react-router-dom";
+
+import "../../style/main.scss";
 
 const HOLIDAYS = [];
 
@@ -30,6 +43,9 @@ const generateTimes = () => {
 const timeslots = generateTimes();
 
 const AppointmentForm = () => {
+  const { user } = useAuthStore.getState();
+  const patientDNI = user ? user.DNI : '';
+
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [formData, setFormData] = useState({
     date: "",
@@ -41,47 +57,39 @@ const AppointmentForm = () => {
   const [loadingDoctors, setLoadingDoctors] = useState(true);
   const [selectedDate, setSelectedDate] = useState("");
   const [appointments, setAppointments] = useState([]);
-
-  // DNI del paciente de prueba
-  const patientDNI = "40123726K";
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const fetchDoctors = async () => {
+    const loadData = async () => {
+
+    // Redirect to home if not logged in
+     // if (!user) {
+      //    navigate('/')
+     // }
+    //const fetchDoctors = async () => {
+
       try {
-        const response = await fetch(
-          "https://clinimood-mern-backend.onrender.com/users/role/doctor"
-        );
-        const data = await response.json();
-        if (data.success) {
-          setDoctors(data.data);
+        const doctorsData = await fetchDoctors();
+        if (doctorsData.success) {
+          setDoctors(doctorsData.data);
         } else {
-          console.error("Error fetching doctors:", data.message);
+          console.error("Error fetching doctors:", doctorsData.message);
+        }
+
+        const appointmentsData = await fetchAppointments();
+        if (appointmentsData.success) {
+          setAppointments(appointmentsData.data);
+        } else {
+          console.error("Error fetching appointments:", appointmentsData.message);
         }
       } catch (error) {
-        console.error("Error fetching doctors:", error);
+        console.error("Error loading data:", error);
       } finally {
         setLoadingDoctors(false);
       }
     };
 
-    const fetchAppointments = async () => {
-      try {
-        const response = await fetch(
-          "https://clinimood-mern-backend.onrender.com/appointments"
-        );
-        const data = await response.json();
-        if (data.success) {
-          setAppointments(data.data);
-        } else {
-          console.error("Error fetching appointments:", data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching appointments:", error);
-      }
-    };
-
-    fetchDoctors();
-    fetchAppointments();
+    loadData();
   }, []);
 
   const isPastDate = (date) => {
@@ -127,31 +135,6 @@ const AppointmentForm = () => {
     setFormData({ ...formData, description: e.target.value });
   };
 
-  const updateHistory = async () => {
-    try {
-      const response = await fetch(
-        "https://clinimood-mern-backend.onrender.com/history/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ patientDNI }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!data.success) {
-        console.error("Error updating history:", data.message);
-      } else {
-        console.log("Patient history updated successfully.");
-      }
-    } catch (error) {
-      console.error("Error updating history:", error);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -160,7 +143,11 @@ const AppointmentForm = () => {
       !formData.time ||
       !formData.description
     ) {
-      alert("Please complete all fields.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please complete all fields.",
+      });
       return;
     }
 
@@ -173,29 +160,43 @@ const AppointmentForm = () => {
     };
 
     try {
-      const response = await fetch(
-        "https://clinimood-mern-backend.onrender.com/appointments/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(appointmentBody),
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to confirm this appointment?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, confirm!",
+        cancelButtonText: "No, cancel!",
+      });
+
+      if (result.isConfirmed) {
+        const appointmentResponse = await createAppointment(appointmentBody);
+        if (appointmentResponse.message=="Medical appointment made succesfully") {
+          await updateMedicalHistory(patientDNI);
+          Swal.fire({
+            icon: "success",
+            title: "Appointment created!",
+            text: "Your appointment has been successfully scheduled.",
+          });
+          setTimeout(() => {
+            window.location.href = "/history";
+          }, 2000);        
+        } else {
+          console.log(appointmentResponse)
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: appointmentResponse.message,
+          });
         }
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        alert("Appointment created successfully!");
-        await updateHistory();
-        window.location.href = "/history";
-      } else {
-        alert("Error creating appointment: " + data.message);
       }
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while creating the appointment.",
+      });
       console.error("Error creating appointment:", error);
-      alert("An error occurred while creating the appointment.");
     }
   };
 
@@ -255,6 +256,12 @@ const AppointmentForm = () => {
   const isFormValid =
     formData.date && formData.doctorDni && formData.time && formData.description;
 
+  if (!user) {
+    // Si el usuario no está logueado, redirigir a la página de login
+    alert("Please log in to make an appointment.");
+    window.location.href = "/login";
+  }
+
   return (
     <div className="appointment-form">
       <h2 className="appointment-form__title">Book an Appointment</h2>
@@ -268,7 +275,7 @@ const AppointmentForm = () => {
             >
               &lt;
             </button>
-            <h3>{format(currentMonth, "MMMM yyyy")}</h3>
+            <h3 className="appointment-form__title">{format(currentMonth, "MMMM yyyy")}</h3>
             <button
               type="button"
               className="appointment-form__month-button"
@@ -290,7 +297,7 @@ const AppointmentForm = () => {
           </div>
         </div>
 
-        <label htmlFor="doctor-select" className="appointment-form__label">
+        <label htmlFor="doctor-select" className="appointment-form__title">
           Doctor
         </label>
         {loadingDoctors ? (
@@ -317,43 +324,45 @@ const AppointmentForm = () => {
 
         {formData.date && formData.doctorDni && (
           <div className="appointment-form__timeslot-container">
-            <h3>
+            <h3 className="appointment-form__title">
               {new Date(formData.date).toLocaleDateString("en-US", {
                 weekday: "long",
                 day: "numeric",
               })}
             </h3>
-            {timeslots.map((time, index) => {
-              const isDisabled = isTimeSlotTaken(
-                formData.date,
-                time,
-                formData.doctorDni
-              );
-              return (
-                <button
-                  key={`time-${index}`}
-                  className={`appointment-form__timeslot ${
-                    isDisabled
-                      ? "appointment-form__timeslot--disabled"
-                      : formData.time === time
-                      ? "appointment-form__timeslot--selected"
-                      : ""
-                  }`}
-                  type="button"
-                  onClick={() =>
-                    !isDisabled &&
-                    handleTimeChange({ target: { value: time } })
-                  }
-                  disabled={isDisabled}
-                >
-                  {time}
-                </button>
-              );
-            })}
+            <div>
+              {timeslots.map((time, index) => {
+                const isDisabled = isTimeSlotTaken(
+                  formData.date,
+                  time,
+                  formData.doctorDni
+                );
+                return (
+                  <button
+                    key={`time-${index}`}
+                    className={`appointment-form__timeslot ${
+                      isDisabled
+                        ? "appointment-form__timeslot--disabled"
+                        : formData.time === time
+                        ? "appointment-form__timeslot--selected"
+                        : ""
+                    }`}
+                    type="button"
+                    onClick={() =>
+                      !isDisabled &&
+                      handleTimeChange({ target: { value: time } })
+                    }
+                    disabled={isDisabled}
+                  >
+                    {time}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
 
-        <label htmlFor="description" className="appointment-form__label">
+        <label htmlFor="description" className="appointment-form__title">
           Description
         </label>
         <textarea

@@ -1,0 +1,128 @@
+.home-container {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #ff7e00, #6a0dad);
+    font-family: Calibri, sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 8%;
+    gap: 3rem;
+}
+
+.content-wrapper {
+    width: 70%;
+    text-align: left;
+}
+
+.image-container {
+    width: 300vh;
+    height: 80vh;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.right-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.header-text {
+    color: white;
+    font-size: 4rem;
+    font-weight: lighter;
+    animation: slideIn 1s ease-in-out;
+}
+
+.subheader {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: lighter;
+    animation: slideIn 1.2s ease-in-out;
+}
+
+.generic-phrase {
+    color: #333;
+    font-size: 1.2rem;
+    font-style: italic;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.viewDoctors-button {
+    width: fit-content;
+    background: #ffcc80;
+    color: #e65100;
+    font-weight: bold;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 2rem;
+    animation: popUp 1.5s ease-in-out;
+}
+
+.viewDoctors-button:hover {
+    background: #ffb74d;
+}
+
+/* Dark Mode */
+.dark-mode .home-container {
+    background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
+}
+
+.dark-mode .header-text,
+.dark-mode .subheader {
+    color: #f1f1f1;
+}
+
+.dark-mode .generic-phrase {
+    color: #ccc;
+}
+
+.dark-mode .viewDoctors-button {
+    background: #555;
+    color: #fff;
+}
+
+.dark-mode .viewDoctors-button:hover {
+    background: #777;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes popUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+

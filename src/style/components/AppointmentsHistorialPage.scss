@@ -1,0 +1,386 @@
+.appointment-form {
+  max-width: 60%;
+  margin: 2rem auto;
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+.appointment-form__title {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.appointment-form__calendar-day--disabled,
+.appointment-form__calendar-day--weekend {
+  background-color: #f4f4f4;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.appointment-form__calendar-day--selected {
+  background-color: #fcf2f2;
+  border: 1px solid #6d4c7d;
+  color: #f56363;
+}
+
+.appointment-form__calendar-day--has-appointment {
+  background-color: #f56363;
+  color: white;
+  border: 1px solid #f56363;
+}
+
+.appointment-form__calendar-container {
+  flex: 1;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.appointment-form__select, .appointment-form__button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 1rem; 
+  font-size: 1rem; 
+  border: none;
+  border-radius: 5px;
+}
+
+.appointment-form__calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.appointment-form__month-button {
+  background-color: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-size: 2rem;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.appointment-form__calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.appointment-form__calendar-day,
+.appointment-form__calendar-day-header {
+  padding: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  color: var(--light-text);
+}
+
+.appointment-form__calendar-day-header {
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.appointment-form__calendar-day--disabled,
+.appointment-form__calendar-day--weekend {
+  background-color: var(--light-disabled-bg);
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.appointment-form__calendar-day--selected {
+  background-color: var(--light-selected-bg);
+  border: 1px solid #6d4c7d;
+  color: var(--color-primary);
+}
+.dark-mode .appointment-form__calendar-day--selected {
+  border: 1px solid #6d4c7d; 
+}
+
+.appointment-form__calendar-day--has-appointment {
+  background-color: #6d4c7d;
+  color: white;
+  border: 1px solid ;
+}
+
+.appointment-form__textarea {
+  width: 96%;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--light-border);
+  font-size: 14px;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+.appointment-form__appointments-list {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-form__appointments-list h3 {
+  text-align: center;
+  color: #6d4c7d;
+  margin-bottom: 1rem;
+}
+
+.appointment-form__appointment-item {
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  list-style: none;
+
+}
+
+.appointment-form__appointment-item:hover {
+  background-color: #f9f9f9;
+}
+
+.appointment-form__appointment-item--selected {
+  background-color: #f56363;
+  color: white;
+  border-color: #f56363;
+
+}
+
+.appointment-form__appointment-item--selected:hover {
+  color: black;
+
+}
+
+
+
+.appointment-form__appointment-details {
+  margin-top: 3rem;
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-form__appointment-details h3 {
+  text-align: center;
+  color: #6d4c7d;
+  margin-bottom: 2rem;
+}
+
+.appointment-form__appointment-details p {
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Botones de confirmar y cancelar */
+.appointment-form__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.appointment-form__button {
+  border-color: #6d4c7d;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.appointment-form__button .appointment-form__button--confirm {
+  background-color: #4caf50;
+  color: white;
+}
+.appointment-form__timeslot-container {
+  margin-bottom: 1rem;
+}
+
+.appointment-form__timeslot {
+  padding: 10px;
+  border: 1px solid #6d4c7d;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 10rem;
+  margin: 0.2rem;
+  font-size: 1.1rem;
+}
+
+.appointment-form__button--confirm:hover {
+  background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+}
+
+.appointment-form__button--cancel {
+  background-color: #f44336; /* Rojo más suave */
+  color: white;
+}
+
+.appointment-form__button--cancel:hover {
+  background-color: #e53935; /* Rojo más oscuro al pasar el mouse */
+}
+
+/* Modo oscuro */
+.dark-mode .appointment-form {
+  background-color: var(--dark-border);
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__title {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__calendar-header {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__month-button {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__calendar-day,
+.dark-mode .appointment-form__calendar-day-header {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__calendar-day--disabled,
+.dark-mode .appointment-form__calendar-day--weekend {
+  background-color: var(--dark-disabled-bg);
+  color: #bbb;
+}
+
+.dark-mode .appointment-form__calendar-day--selected {
+  background-color: var(--dark-text);
+  border-color: #6d4c7d;
+  color: var(--color-primary);
+}
+
+.dark-mode .appointment-form__calendar-day--has-appointment {
+  background-color: #6d4c7d;
+  color: white;
+  border: 1px solid #a4a2a5;
+}
+
+.dark-mode .appointment-form__appointments-list {
+  background-color: #333;
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__appointments-list h3 {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__appointment-item {
+  border: 1px solid #555;
+  
+}
+
+.dark-mode .appointment-form__appointment-item:hover {
+  background-color: #444;
+}
+
+.dark-mode .appointment-form__appointment-item--selected {
+  background-color: var(--color-secondary);
+  color: white;
+  border-color: var(--color-secondary);
+}
+
+.dark-mode .appointment-form__appointment-details {
+  background-color: #222;
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__appointment-details h3 {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__appointment-details p {
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__button--confirm {
+  background-color: #388e3c; /* Verde más oscuro para modo oscuro */
+}
+
+.dark-mode .appointment-form__button--confirm:hover {
+  background-color: #2e7d32; /* Verde más oscuro al pasar el mouse */
+}
+
+.dark-mode .appointment-form__button--cancel {
+  background-color: #d32f2f; /* Rojo más oscuro para modo oscuro */
+}
+
+.dark-mode .appointment-form__button--cancel:hover {
+  background-color: #c62828; /* Rojo más oscuro al pasar el mouse */
+}
+
+.dark-mode .appointment-form__button--new {
+  background-color: #1976d2; /* Azul más oscuro para modo oscuro */
+}
+
+.dark-mode .appointment-form__button--new:hover {
+  background-color: #1565c0; /* Azul más oscuro al pasar el mouse */
+}
+
+.dark-mode .appointment-form__textarea {
+  background-color: #444;
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.dark-mode .appointment-form__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.dark-mode .appointment-form__appointments-list {
+  background-color: #333;
+  color: var(--dark-text);
+}
+
+.dark-mode .appointment-form__appointment-item {
+  border: 1px solid #555;
+}
+
+.dark-mode .appointment-form__appointment-item:hover {
+  background-color: #444;
+}
+
+.dark-mode .appointment-form__appointment-item--selected {
+  background-color: var(--color-secondary);
+  color: white;
+  border-color: var(--color-secondary);
+}
+.dart-mode .appointment-form__timeslot {
+
+}
+
+
+.appointment-form__appointments-list {
+  gap: 15px; /* Más espacio entre las citas */
+}
+
+.appointment-form__appointment-item {
+  padding: 20px; /* Más padding para más espacio interno */
+}
+
+.appointment-form {
+  font-family: Arial, sans-serif;
+  max-width: 1000px; /* Aumentamos el ancho máximo */
+  margin: 20px auto;
+  display: flex;
+  gap: 20px;
+  padding: 30px; /* Aumentamos el padding */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+

@@ -1,0 +1,43 @@
+:root {
+    /* Colores principales */
+    --color-primary: #70348A;
+    --color-primary-dark: #5a2a6f; /* Oscurecido manualmente */
+    --color-secondary: #F58524;
+    --color-secondary-dark: #c46a1d; /* Oscurecido manualmente */
+    --primary-orange: #f39c12;
+    --dark-orange: #e67e22;
+
+    /* Modo claro */
+    --light-bg: #e8ebf5;
+    --light-text: #333;
+    --light-header-bg: #fff;
+    --light-border: #ddd;
+    --light-day-bg: #fff;
+    --light-disabled-bg: #f4f4f4;
+    --light-selected-bg: #fcf2f2;
+
+    /* Modo oscuro */
+    --dark-bg: #121212;
+    --dark-text: #ffffff;
+    --dark-header-bg: #2c2c2c;
+    --dark-border: #555;
+    --dark-day-bg: #333;
+    --dark-disabled-bg: #444;
+    --dark-selected-bg: #f56363;
+
+    /* Estados (status) */
+    --status-pending-bg: #fff3cd;
+    --status-pending-text: #856404;
+    --status-confirmed-bg: #d1ecf1;
+    --status-confirmed-text: #0c5460;
+    --status-completed-bg: #d4edda;
+    --status-completed-text: #155724;
+
+    /* Estados en modo oscuro */
+    --dark-status-pending-bg: #444444;
+    --dark-status-pending-text: #e0e0e0;
+    --dark-status-confirmed-bg: #555555;
+    --dark-status-confirmed-text: #e0e0e0;
+    --dark-status-completed-bg: #666666;
+    --dark-status-completed-text: #e0e0e0;
+}
