@@ -1,6 +1,6 @@
 import { Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { useNavigate } from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import useAuthStore from "../context/useAuthStore.jsx"
 import {useEffect} from "react";
 import {Button, TextField} from "@mui/material";
@@ -49,14 +49,14 @@ const LoginForm = () => {
             <div className="form-box">
                 <h1>LOGIN</h1>
                 <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{email: '', password: ''}}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
-                    {({ isSubmitting, handleSubmit }) => (
+                    {({isSubmitting, handleSubmit}) => (
                         <form onSubmit={handleSubmit}>
                             <Field name="email">
-                                {({ field }) => (
+                                {({field}) => (
                                     <TextField
                                         {...field}
                                         type="email"
@@ -68,10 +68,10 @@ const LoginForm = () => {
                                     />
                                 )}
                             </Field>
-                            <ErrorMessage name="email" component="div" className="error-message" />
+                            <ErrorMessage name="email" component="div" className="error-message"/>
 
                             <Field name="password">
-                                {({ field }) => (
+                                {({field}) => (
                                     <TextField
                                         {...field}
                                         type="password"
@@ -83,7 +83,7 @@ const LoginForm = () => {
                                     />
                                 )}
                             </Field>
-                            <ErrorMessage name="password" component="div" className="error-message" />
+                            <ErrorMessage name="password" component="div" className="error-message"/>
 
                             <Button
                                 type="submit"
@@ -99,6 +99,10 @@ const LoginForm = () => {
                 </Formik>
                 <p className="form-links">
                     Don’t have an account? <a href="/register">Sign up</a>
+                </p>
+
+                <p className="form-links">
+                    Did you forget your password? <NavLink to="/password-recovery">Click here</NavLink>
                 </p>
             </div>
         </div>
