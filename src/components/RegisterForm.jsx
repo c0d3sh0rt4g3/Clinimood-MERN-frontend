@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import { TextField, Button } from '@mui/material'
 import axios from 'axios'
 import useAuthStore from "../context/useAuthStore.jsx"
-import { useNavigate } from "react-router-dom"
+import {NavLink, useNavigate} from "react-router-dom"
 import {useEffect} from "react"
 
 const RegisterForm = () => {
@@ -69,87 +69,97 @@ const RegisterForm = () => {
             onSubmit={handleSubmit}
         >
             {({ isSubmitting, handleSubmit }) => (
-                <form className="auth-form-container" onSubmit={handleSubmit}>
-                    <h1>Registro</h1>
+                <form className="form-container" onSubmit={handleSubmit}>
+                    <div className="form-box">
+                        <h1>SIGN UP</h1>
 
-                    <Field name="DNI">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                type="text"
-                                label="DNI"
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="DNI" component="div" className="error" />
+                        <Field name="DNI">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    type="text"
+                                    label="DNI"
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    className="input-field"
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="DNI" component="div" className="error-message" />
 
-                    <Field name="name">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                type="text"
-                                label="Nombre"
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="name" component="div" className="error" />
+                        <Field name="name">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    type="text"
+                                    label="Name"
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    className="input-field"
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="name" component="div" className="error-message" />
 
-                    <Field name="email">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                type="email"
-                                label="Correo Electrónico"
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="email" component="div" className="error" />
+                        <Field name="email">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    type="email"
+                                    label="Email"
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    className="input-field"
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="email" component="div" className="error-message" />
 
-                    <Field name="password">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                type="password"
-                                label="Contraseña"
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="password" component="div" className="error" />
+                        <Field name="password">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    type="password"
+                                    label="Password"
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    className="input-field"
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="password" component="div" className="error-message" />
 
-                    <Field name="confirmPassword">
-                        {({ field }) => (
-                            <TextField
-                                {...field}
-                                type="password"
-                                label="Confirmar Contraseña"
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                            />
-                        )}
-                    </Field>
-                    <ErrorMessage name="confirmPassword" component="div" className="error" />
+                        <Field name="confirmPassword">
+                            {({ field }) => (
+                                <TextField
+                                    {...field}
+                                    type="password"
+                                    label="Confirm Password"
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    className="input-field"
+                                />
+                            )}
+                        </Field>
+                        <ErrorMessage name="confirmPassword" component="div" className="error-message" />
 
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        disabled={isSubmitting}
-                        fullWidth
-                    >
-                        {isSubmitting ? 'Registrando...' : 'Registrarse'}
-                    </Button>
+                        <p className="form-links"> Have already an account? <NavLink to="/login">Login!</NavLink></p>
+
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            disabled={isSubmitting}
+                            fullWidth
+                            className="form-button"
+                        >
+                            {isSubmitting ? 'Signing up' : 'Sign Up'}
+                        </Button>
+                    </div>
                 </form>
             )}
         </Formik>
