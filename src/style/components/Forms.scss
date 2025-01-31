@@ -1,0 +1,193 @@
+:root {
+  --primary-color: #ff6200;
+  --secondary-color: #6b2e98;
+  --gradient-bg: linear-gradient(135deg, #ff914d, #6b2e98);
+  --error-color: red;
+  --box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  --font-size-base: 16px;
+  --font-size-small: 14px;
+  --font-size-large: 18px;
+  --border-radius: 8px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--gradient-bg);
+}
+
+.form-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  width: 380px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.form-box h1 {
+  font-size: 32px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff914d 30%, #6b2e98);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+
+
+.form-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-field .MuiOutlinedInput-root {
+  border-radius: var(--border-radius);
+  border-color: color-mix(in srgb, var(--secondary-color) 80%, white 20%);
+}
+
+.input-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: color-mix(in srgb, var(--primary-color) 90%, white 10%);
+}
+
+.input-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary-color);
+}
+
+.input-field .MuiInputLabel-root {
+  color: color-mix(in srgb, var(--secondary-color) 80%, black 20%);
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: var(--font-size-small);
+  margin-bottom: 10px;
+}
+
+.form-button {
+  background: var(--primary-color) !important;
+  color: white !important;
+  font-size: var(--font-size-large) !important;
+  font-weight: bold !important;
+  border-radius: var(--border-radius) !important;
+  padding: 12px !important;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2) !important;
+  transition: background 0.3s !important;
+}
+
+.form-button:hover {
+  background: color-mix(in srgb, var(--primary-color) 80%, black 20%) !important;
+}
+
+.form-links {
+  margin-top: 10px;
+  font-size: var(--font-size-small);
+  color: black;
+  font-weight: lighter;
+  opacity: 80%;
+}
+
+.form-links a {
+  text-decoration: none;
+  color: #8a21fa;
+  font-weight: bold;
+}
+
+.login-page .form-box {
+  width: 400px;
+}
+
+.register-page .form-box {
+  width: 420px;
+}
+
+.recovery-page .form-box {
+  width: 380px;
+}
+
+/* Modo oscuro */
+.dark-mode {
+  --primary-color: #ff914d;
+  --secondary-color: #8a21fa;
+  --gradient-bg: linear-gradient(135deg, #2e2e2e, #1a1a1a);
+  --error-color: #ff4d4d;
+  --box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.1);
+  --font-size-base: 16px;
+  --font-size-small: 14px;
+  --font-size-large: 18px;
+  --border-radius: 8px;
+  --text-color: #e0e0e0;
+  --input-bg: #333;
+  --input-border: #555;
+}
+
+.dark-mode .form-container {
+  background: var(--gradient-bg);
+}
+
+.dark-mode .form-box {
+  background: #222;
+  color: var(--text-color);
+  box-shadow: var(--box-shadow);
+}
+
+.dark-mode .form-box h1 {
+  background: linear-gradient(135deg, #ff914d 30%, #8a21fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark-mode .input-field .MuiOutlinedInput-root {
+  background: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+.dark-mode .input-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary-color);
+}
+
+.dark-mode .input-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary-color);
+}
+
+.dark-mode .input-field .MuiInputLabel-root {
+  color: var(--text-color);
+}
+
+.dark-mode .error-message {
+  color: var(--error-color);
+}
+
+.dark-mode .form-button {
+  background: var(--primary-color) !important;
+  color: white !important;
+}
+
+.dark-mode .form-button:hover {
+  background: color-mix(in srgb, var(--primary-color) 80%, black 20%) !important;
+}
+
+.dark-mode .form-links {
+  color: var(--text-color);
+}
+
+.dark-mode .form-links a {
+  color: var(--secondary-color);
+}
+
