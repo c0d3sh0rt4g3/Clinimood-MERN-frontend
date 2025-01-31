@@ -1,28 +1,27 @@
-
 .home-container {
     min-height: 100vh;
     background: linear-gradient(to bottom, #ff7e00, #6a0dad);
     font-family: Calibri, sans-serif;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start; /* Alinea el contenido a la izquierda */
+    justify-content: flex-start;
     align-items: center;
     padding: 1rem 8%;
-    gap: 3rem; /* Espaciado entre el contenido y la imagen */
+    gap: 3rem;
 }
 
 .content-wrapper {
     width: 70%;
-    text-align: left; /* Asegura que el texto se mantenga alineado a la izquierda */
+    text-align: left;
 }
 
 .image-container {
     width: 300vh;
     height: 80vh;
-    margin-left: auto; /* Empuja la imagen completamente hacia la derecha */
+    margin-left: auto;
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Asegura que la imagen se alinee bien */
+    justify-content: flex-end;
 }
 
 .right-image {
@@ -72,7 +71,30 @@
     background: #ffb74d;
 }
 
-/* Animaciones */
+/* Dark Mode */
+.dark-mode .home-container {
+    background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
+}
+
+.dark-mode .header-text,
+.dark-mode .subheader {
+    color: #f1f1f1;
+}
+
+.dark-mode .generic-phrase {
+    color: #ccc;
+}
+
+.dark-mode .viewDoctors-button {
+    background: #555;
+    color: #fff;
+}
+
+.dark-mode .viewDoctors-button:hover {
+    background: #777;
+}
+
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -103,7 +125,4 @@
         opacity: 1;
     }
 }
-
-
-
 
