@@ -1,117 +1,118 @@
 import { useState, useEffect } from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import useAuthStore from "../context/useAuthStore";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { TextField, Button } from "@mui/material";
 
 const ProfilePage = () => {
     const { user, setUser } = useAuthStore();
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        DNI: "",
-        phone: "",
-        address: "",
-        specialization: ""
-    });
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (user) {
-            setFormData({
-                name: user.name || "",
-                email: user.email || "",
-                DNI: user.DNI || "",
-                phone: user.phone || "",
-                address: user.address || "",
-                specialization: user.role === "doctor" ? user.specialization || "" : ""
-            });
-        }
+        if (!user) return;
     }, [user]);
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const initialValues = {
+        name: user?.name || "",
+        email: user?.email || "",
+        DNI: user?.DNI || "",
+        phone: user?.phone || "",
+        address: user?.address || "",
+        specialization: user?.role === "doctor" ? user?.specialization || "" : ""
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
+    const validationSchema = Yup.object({
+        name: Yup.string().required("Name is required"),
+        phone: Yup.string(),
+        address: Yup.string(),
+        specialization: Yup.string(),
+    });
 
+    const handleSubmit = async (values, { setSubmitting }) => {
+        setLoading(true);
         try {
             const userIdOrDni = user.DNI || user._id;
-
             const response = await axios.put(
                 `https://clinimood-mern-backend.onrender.com/users/${userIdOrDni}`,
-                { ...formData },
+                values,
                 { headers: { "Content-Type": "application/json" } }
             );
-
-            console.log("Respuesta del servidor:", response.data);
 
             if (response.data.success) {
                 setUser(response.data.data);
                 localStorage.setItem("user", JSON.stringify(response.data.data));
-                Swal.fire("Success!", "Profile updated succesfully", "success");
+                Swal.fire("Success!", "Profile updated successfully", "success");
             } else {
-                console.error("Response error:", response.data);
-                Swal.fire("Error", "The profile can´t be updated", "error");
+                Swal.fire("Error", "The profile can't be updated", "error");
             }
         } catch (error) {
-            console.error("petition error:", error.response?.data || error.message);
-            Swal.fire("Error", error.response?.data?.message || "The profile can´t be updated", "error");
+            Swal.fire("Error", error.response?.data?.message || "The profile can't be updated", "error");
         } finally {
             setLoading(false);
+            setSubmitting(false);
         }
     };
-
-
 
     if (!user) {
         return <p>Log in to edit your profile</p>;
     }
 
     return (
-        <div className="profile-container">
-            <h2>User Profile</h2>
+        <div className="form-container">
+            <div className="form-box">
+                <h1>User Profile</h1>
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" name="name" value={formData.name} onChange={handleChange} required/>
-                </label>
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                    {({ isSubmitting }) => (
+                        <Form>
+                            <div className="input-field">
+                                <Field name="name">
+                                    {({ field }) => <TextField {...field} label="Name" variant="outlined" fullWidth required />}
+                                </Field>
+                                <ErrorMessage name="name" component="div" className="error-message" />
+                            </div>
 
-                <label>
-                    Email:
-                    <input type="email" name="email" value={formData.email} disabled/>
-                </label>
+                            <div className="input-field">
+                                <TextField label="Email" value={user.email} variant="outlined" fullWidth disabled />
+                            </div>
 
-                <label>
-                    DNI:
-                    <input type="text" name="DNI" value={formData.DNI} disabled/>
-                </label>
+                            <div className="input-field">
+                                <TextField label="DNI" value={user.DNI} variant="outlined" fullWidth disabled />
+                            </div>
 
-                <label>
-                    phone:
-                    <input type="text" name="phone" value={formData.phone} onChange={handleChange}/>
-                </label>
+                            <div className="input-field">
+                                <Field name="phone">
+                                    {({ field }) => <TextField {...field} label="Phone" variant="outlined" fullWidth />}
+                                </Field>
+                            </div>
 
-                <label>
-                    address:
-                    <input type="text" name="address" value={formData.address} onChange={handleChange}/>
-                </label>
+                            <div className="input-field">
+                                <Field name="address">
+                                    {({ field }) => <TextField {...field} label="Address" variant="outlined" fullWidth />}
+                                </Field>
+                            </div>
 
-                {user.role === "doctor" && (
-                    <label>
-                        Specialization:
-                        <input type="text" name="specialization" value={formData.specialization}
-                               onChange={handleChange}/>
-                    </label>
-                )}
+                            {user.role === "doctor" && (
+                                <div className="input-field">
+                                    <Field name="specialization">
+                                        {({ field }) => <TextField {...field} label="Specialization" variant="outlined" fullWidth />}
+                                    </Field>
+                                </div>
+                            )}
 
-                <button type="submit" disabled={loading}>
-                    {loading ? "Saving..." : "Save Changes"}
-                </button>
-            </form>
-            <button>Change Password</button>
+                            <Button type="submit" className="form-button" variant="contained" disabled={isSubmitting || loading} fullWidth>
+                                {loading ? "Saving..." : "Save Changes"}
+                            </Button>
+                        </Form>
+                    )}
+                </Formik>
+
+                <Button className="form-button" variant="contained" fullWidth>
+                    Change Password
+                </Button>
+            </div>
         </div>
     );
 };
