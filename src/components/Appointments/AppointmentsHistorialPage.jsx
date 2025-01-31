@@ -17,11 +17,7 @@ import {
   cancelAppointment as cancelAppointmentApi,
 } from '../../assets/apiService';
 
-
-//import "../../style/main.scss"
-//import useAuthStore from "../../context/useAuthStore.jsx";
-//import {useNavigate} from "react-router-dom";
-//import "../../style/main.scss";
+import {useNavigate} from "react-router-dom";
 
 
 const formatAppointmentDate = (date) => format(new Date(date), "yyyy-MM-dd");
