@@ -29,9 +29,8 @@ const AppointmentsList = ({ doctorDNI }) => {
           setAppointments(response.data);
           setFilteredAppointments(response.data);
 
-          // Cargar detalles de todos los pacientes
           const patientDNIs = response.data.map((appt) => appt.patientDNI);
-          const uniquePatientDNIs = [...new Set(patientDNIs)]; // Eliminar duplicados
+          const uniquePatientDNIs = [...new Set(patientDNIs)];
 
           const details = {};
           for (const dni of uniquePatientDNIs) {

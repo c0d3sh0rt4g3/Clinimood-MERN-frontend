@@ -12,6 +12,16 @@ export const fetchDoctors = async () => {
   }
 };
 
+export const fetchPatients = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/users/role/patient`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching patients:", error);
+    throw error;
+  }
+};
+
 export const fetchAppointments = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/appointments`);
@@ -25,8 +35,11 @@ export const fetchAppointments = async () => {
 export const createAppointment = async (appointmentData) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/appointments/`, appointmentData);
+    console.log(response.data);
     return response.data;
   } catch (error) {
+    console.log(appointmentData);
+
     console.error("Error creating appointment:", error);
     throw error;
   }

@@ -70,6 +70,7 @@ const Navbar = () => {
 
           {user ? (
             <>
+              <span className="navbar__user-name">{user.name}</span> {/* Mostrar el nombre del usuario */}
               <button onClick={handleLogout} className="navbar__button navbar__button--logout">
                 Logout
               </button>
