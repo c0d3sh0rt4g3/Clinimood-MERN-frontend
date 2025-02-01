@@ -60,7 +60,7 @@ const LoginForm = () => {
                                     <TextField
                                         {...field}
                                         type="email"
-                                        label="Email / DNI"
+                                        label="Email"
                                         variant="outlined"
                                         margin="normal"
                                         fullWidth

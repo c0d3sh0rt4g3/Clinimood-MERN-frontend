@@ -116,7 +116,21 @@ body {
 .dark-mode .navbar__button {
   background-color: #1e1e1e;
 }
-.dark-mode .navbar__profile-icono{
+.dark-mode .navbar__profile-icon{
   background-color: white;
  
+}
+
+.navbar__user-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: white; 
+}
+
+.dark-mode .navbar__user-name {
+  color: var(--dark-text); 
+}
+
+.navbar__button--logout {
+  margin-left: 10px; 
 }

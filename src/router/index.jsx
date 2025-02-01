@@ -15,6 +15,7 @@ import ContactForm from "../components/ContactForm.jsx";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import DoctorAppointmentsPage from "../pages/DoctorAppointmentsPage.jsx";
 import PasswordRecovery from "../pages/PasswordRecovery.jsx";
+import PatientsList from "../pages/PatientsList.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: "doctor-appointments",
         element: <DoctorAppointmentsPage/>
+      },
+      {
+        path: "doctor-patients",
+        element: <PatientsList/>
       },
       {
         path: "contact",

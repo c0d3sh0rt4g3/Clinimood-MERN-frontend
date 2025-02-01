@@ -1,27 +1,11 @@
-import { useState, useEffect } from "react";
-import {
-  addMonths,
-  subMonths,
-  format,
-  startOfMonth,
-  endOfMonth,
-} from "date-fns";
-
+import { useEffect } from "react";
+import { format, addMonths, subMonths, startOfMonth, endOfMonth } from "date-fns";
 import useAuthStore from '../../context/useAuthStore';
-import Swal from "sweetalert2";
-import {
-  fetchDoctors,
-  fetchAppointments,
-  createAppointment,
-  updateMedicalHistory,
-} from "../../assets/apiService";
-
-//import useAuthStore from "../../context/useAuthStore.jsx";
-import {useNavigate} from "react-router-dom";
-
+import useCreateAppointmentStore from '../../context/useCreateAppointmentStore'; // Importa el store
 import "../../style/main.scss";
 
 const HOLIDAYS = [];
+
 
 const generateTimes = () => {
   const times = [];
@@ -31,9 +15,7 @@ const generateTimes = () => {
     const hours = Math.floor(current / 60);
     const minutes = current % 60;
     times.push(
-      `${hours.toString().padStart(2, "0")}:${minutes
-        .toString()
-        .padStart(2, "0")}`
+      `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`
     );
     current += 30;
   }
@@ -43,54 +25,34 @@ const generateTimes = () => {
 const timeslots = generateTimes();
 
 const AppointmentForm = () => {
-  const { user } = useAuthStore.getState();
+  const { user } = useAuthStore();
   const patientDNI = user ? user.DNI : '';
 
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [formData, setFormData] = useState({
-    date: "",
-    doctorDni: "",
-    time: "",
-    description: "",
-  });
-  const [doctors, setDoctors] = useState([]);
-  const [loadingDoctors, setLoadingDoctors] = useState(true);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [appointments, setAppointments] = useState([]);
-  const navigate = useNavigate()
+  // Usa el store de Zustand
+  const {
+    currentMonth,
+    formData,
+    doctors,
+    loadingDoctors,
+    selectedDate,
+    appointments,
+    setCurrentMonth,
+    setFormData,
+    setSelectedDate,
+    setPatientDNI, // Asegúrate de importar esta acción
+    loadData,
+    handleSubmit,
+  } = useCreateAppointmentStore();
 
   useEffect(() => {
-    const loadData = async () => {
-
-    // Redirect to home if not logged in
-     // if (!user) {
-      //    navigate('/')
-     // }
-    //const fetchDoctors = async () => {
-
-      try {
-        const doctorsData = await fetchDoctors();
-        if (doctorsData.success) {
-          setDoctors(doctorsData.data);
-        } else {
-          console.error("Error fetching doctors:", doctorsData.message);
-        }
-
-        const appointmentsData = await fetchAppointments();
-        if (appointmentsData.success) {
-          setAppointments(appointmentsData.data);
-        } else {
-          console.error("Error fetching appointments:", appointmentsData.message);
-        }
-      } catch (error) {
-        console.error("Error loading data:", error);
-      } finally {
-        setLoadingDoctors(false);
-      }
-    };
-
-    loadData();
-  }, []);
+    if (!user) {
+      alert("Please log in to make an appointment.");
+      window.location.href = "/login";
+    } else {
+      setPatientDNI(patientDNI); // Actualiza patientDNI en el store
+      loadData();
+    }
+  }, [user, patientDNI, loadData, setPatientDNI]);
 
   const isPastDate = (date) => {
     const today = new Date();
@@ -127,77 +89,12 @@ const AppointmentForm = () => {
     setFormData({ ...formData, doctorDni: selectedDoctorDni, time: "" });
   };
 
-  const handleTimeChange = (e) => {
-    setFormData({ ...formData, time: e.target.value });
+  const handleTimeChange = (time) => {
+    setFormData({ ...formData, time });
   };
 
   const handleDescriptionChange = (e) => {
     setFormData({ ...formData, description: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (
-      !formData.date ||
-      !formData.doctorDni ||
-      !formData.time ||
-      !formData.description
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please complete all fields.",
-      });
-      return;
-    }
-
-    const appointmentDate = `${formData.date}T${formData.time}`;
-    const appointmentBody = {
-      patientDNI,
-      doctorDNI: formData.doctorDni,
-      date: appointmentDate,
-      description: formData.description,
-    };
-
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "Do you want to confirm this appointment?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: "Yes, confirm!",
-        cancelButtonText: "No, cancel!",
-      });
-
-      if (result.isConfirmed) {
-        const appointmentResponse = await createAppointment(appointmentBody);
-        if (appointmentResponse.message=="Medical appointment made succesfully") {
-          await updateMedicalHistory(patientDNI);
-          Swal.fire({
-            icon: "success",
-            title: "Appointment created!",
-            text: "Your appointment has been successfully scheduled.",
-          });
-          setTimeout(() => {
-            window.location.href = "/history";
-          }, 2000);        
-        } else {
-          console.log(appointmentResponse)
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: appointmentResponse.message,
-          });
-        }
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "An error occurred while creating the appointment.",
-      });
-      console.error("Error creating appointment:", error);
-    }
   };
 
   const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
@@ -222,16 +119,9 @@ const AppointmentForm = () => {
     }
 
     for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
-      const date = new Date(
-        currentMonth.getFullYear(),
-        currentMonth.getMonth(),
-        i
-      );
+      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
       const formattedDate = format(date, "yyyy-MM-dd");
-      const isDisabled =
-        isHoliday(formattedDate) ||
-        isWeekend(formattedDate) ||
-        isPastDate(formattedDate);
+      const isDisabled = isHoliday(formattedDate) || isWeekend(formattedDate) || isPastDate(formattedDate);
 
       daysInMonth.push(
         <div
@@ -255,12 +145,6 @@ const AppointmentForm = () => {
 
   const isFormValid =
     formData.date && formData.doctorDni && formData.time && formData.description;
-
-  if (!user) {
-    // Si el usuario no está logueado, redirigir a la página de login
-    alert("Please log in to make an appointment.");
-    window.location.href = "/login";
-  }
 
   return (
     <div className="appointment-form">
@@ -350,7 +234,7 @@ const AppointmentForm = () => {
                     type="button"
                     onClick={() =>
                       !isDisabled &&
-                      handleTimeChange({ target: { value: time } })
+                      handleTimeChange(time)
                     }
                     disabled={isDisabled}
                   >

@@ -1,0 +1,96 @@
+.doctors-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: var(--light-bg);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.doctors-title {
+    color: var(--color-primary);
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.filters-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-input,
+.filter-select {
+    padding: 10px;
+    border: 2px solid var(--light-border);
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-input {
+    width: 50%;
+}
+
+.filter-select {
+    background: white;
+    cursor: pointer;
+}
+
+.doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.no-doctors {
+    color: var(--dark-orange);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.appointment-button {
+    margin-top: 30px;
+    padding: 12px 20px;
+    background: var(--color-secondary);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.appointment-button:hover {
+    background: var(--color-secondary-dark);
+}
+
+
+.dark-mode .doctors-container {
+    background: var(--dark-bg);
+    color: var(--dark-text);
+    border: 2px solid var(--dark-border);
+}
+
+.dark-mode .doctors-title {
+    color: var(--dark-text);
+}
+
+.dark-mode .search-input,
+.dark-mode .filter-select {
+    background: var(--dark-header-bg);
+    color: var(--dark-text);
+    border: 2px solid var(--dark-border);
+}
+
+.dark-mode .appointment-button {
+    background: var(--dark-selected-bg);
+    color: var(--dark-text);
+}
+
+.dark-mode .appointment-button:hover {
+    background: var(--dark-status-confirmed-bg);
+}

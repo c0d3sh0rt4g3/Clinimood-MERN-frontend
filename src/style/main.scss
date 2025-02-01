@@ -6,6 +6,9 @@
 @use "./pages/DoctorAppointmentsPage.scss";
 @use "./Variable.scss";
 @use "./components/Forms.scss";
+@use "./pages/PatientsList.scss";
+@use "./components/doctorCard.scss";
+@use "./pages/DoctorPages.scss";
 :root{
    
   * {
@@ -21,7 +24,7 @@
       
       
 .dark-mode {
-  background-color: var(--dark-bg);
+  background: var(--dark-bg);
   color: var(--dark-text);
 }
 

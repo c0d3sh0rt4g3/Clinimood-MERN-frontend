@@ -47,7 +47,8 @@ const AppointmentForm = () => {
       const result = await fetchAppointmentsApi();
       if (result.success) {
         const patientAppointments = result.data.filter(appt => appt.patientDNI === dni);
-        setAppointments(patientAppointments);
+        const sortedAppointments = patientAppointments.sort((a, b) => new Date(a.date) - new Date(b.date));
+        setAppointments(sortedAppointments);
       } else {
         setError("Failed to fetch appointments.");
       }

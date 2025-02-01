@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DoctorCard from "../components/DoctorCard.jsx";
+import "../style/main.scss";
 
 const Doctors = () => {
     const [doctors, setDoctors] = useState([]);
@@ -10,7 +11,7 @@ const Doctors = () => {
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchDoctors();
@@ -20,14 +21,16 @@ const Doctors = () => {
         const timeoutId = setTimeout(() => {
             const filtered = doctors.filter((doctor) => {
                 const matchesName = doctor.name
-                    .toLowerCase()
-                    .includes(searchQuery.toLowerCase());
+                    ? doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) 
+                    : false;  
+            
                 const matchesSpecialization =
                     specializationFilter === "" ||
-                    doctor.specialization.toLowerCase() ===
-                        specializationFilter.toLowerCase();
+                    (doctor.specialization && doctor.specialization.toLowerCase() === specializationFilter.toLowerCase());
+            
                 return matchesName && matchesSpecialization;
             });
+            
             setFilteredDoctors(filtered);
         }, 300);
 
@@ -35,86 +38,74 @@ const Doctors = () => {
     }, [searchQuery, specializationFilter, doctors]);
 
     const fetchDoctors = async () => {
-        setLoading(true); // Start loading
+        setLoading(true);
         const url =
             "https://clinimood-mern-backend.onrender.com/users/role/doctor";
 
         try {
-            // Using axios to fetch data
             const response = await axios.get(url);
-
-            // Assuming the response follows the structure { data: { data: [...] } }
             setDoctors(response.data.data);
             setFilteredDoctors(response.data.data);
-            console.log(response.data.data.profilePicture);
         } catch (error) {
             console.error(error);
             alert("Failed to fetch doctors. Please try again later.");
         } finally {
-            setLoading(false); // End loading
+            setLoading(false);
         }
     };
 
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    };
-
-    const handleSpecializationChange = (event) => {
-        setSpecializationFilter(event.target.value);
-    };
-
-    const specializations = [
-        ...new Set(doctors.map((doctor) => doctor.specialization)),
-    ];
-
     if (loading) {
-        return <p>Loading doctors...</p>;
+        return <p className="loading-message">Loading doctors...</p>;
     }
 
     return (
-        <>
-            <div>
-                {/* Search Bar */}
+        <div className="doctors-container">
+            <h1 className="doctors-title">Find Your Doctor</h1>
+
+            <div className="filters-container">
                 <input
                     type="text"
-                    placeholder="Search by name"
+                    placeholder="Search by name..."
                     value={searchQuery}
-                    onChange={handleSearch}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
                 />
-                {/* Specialization Dropdown */}
-                <label htmlFor="specialization">Specialization: </label>
+
                 <select
-                    id="specialization"
+                    className="filter-select"
                     value={specializationFilter}
-                    onChange={handleSpecializationChange}
+                    onChange={(e) => setSpecializationFilter(e.target.value)}
                 >
                     <option value="">All Specializations</option>
-                    {specializations.map((specialization, index) => (
-                        <option key={index} value={specialization}>
-                            {specialization}
-                        </option>
-                    ))}
+                    {[...new Set(doctors.map((d) => d.specialization))].map(
+                        (specialization, index) => (
+                            <option key={index} value={specialization}>
+                                {specialization}
+                            </option>
+                        )
+                    )}
                 </select>
             </div>
-            {/*If there's doctors we loop through them to display them*/}
-            {filteredDoctors.length > 0 ? (
-                filteredDoctors.map((doctor) => (
-                    <DoctorCard
-                        key={doctor._id}
-                        name={doctor.name}
-                        specialization={doctor.specialization}
-                        profilePicture={doctor.profilePicture}
-                    />
-                ))
-            ) : (
-                <p>No doctors found.</p>
-            )}
 
-            {/* Navigate to Calendar Page Button */}
-            <button onClick={() => navigate("/calendar")}>
-                Make an appointment
+            <div className="doctors-grid">
+                {filteredDoctors.length > 0 ? (
+                    filteredDoctors.map((doctor) => (
+                        <DoctorCard
+                            key={doctor._id}
+                            name={doctor.name}
+                            specialization={doctor.specialization}
+                            profilePicture={doctor.profilePicture}
+                        />
+                    ))
+                ) : (
+                    <p className="no-doctors">No doctors found.</p>
+                )}
+            </div>
+
+            <button className="appointment-button" onClick={() => navigate("/new-appointment")}>
+                Make an Appointment
             </button>
-        </>
+        </div>
     );
 };
 
