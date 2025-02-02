@@ -1,6 +1,6 @@
 # Clinimood-MERN-frontend
 
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fclinimood-mern-frontend.vercel.app)](https://clinimood-mern-frontend.vercel.app)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fclinimood-mern-frontend.vercel.app)](https://clinimood-mern-frontend-d92djjg5x-c0d3sh0rt4g3s-projects.vercel.app/)
 
 Clinimood is a web application built using the MERN stack (MongoDB, Express, React, and Node.js) designed to streamline medical appointment management. This platform allows patients to schedule appointments with doctors, manage their personal information, and receive reminders for upcoming consultations.
 
