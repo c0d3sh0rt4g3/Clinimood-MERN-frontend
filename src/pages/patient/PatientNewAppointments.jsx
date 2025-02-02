@@ -5,7 +5,6 @@ import AppointmentForm from "../../components/PatientNewAppointment/NewAppointme
 const PatientAppointments = () => {
   return (
     <div>
-      <h1>Get new Appointment</h1>
       <AppointmentForm />
     </div>
   )

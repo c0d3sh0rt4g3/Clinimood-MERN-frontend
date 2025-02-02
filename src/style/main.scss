@@ -15,13 +15,16 @@
     transition: all 0.3s ease;
   }
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: var(--dark-text);
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--dark-text);
       min-height: 100vh;
       background: linear-gradient(to bottom, #ff7e00, #6a0dad);
-      }
-      
+    }
+  .main-content {
+    height: 100vh;
+  }
+
       
 .dark-mode {
   background: var(--dark-bg);
