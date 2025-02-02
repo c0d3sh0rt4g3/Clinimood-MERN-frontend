@@ -7,7 +7,6 @@ import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 const HOLIDAYS = [];
-const navigate = useNavigate()
 
 const generateTimes = () => {
   const times = [];
@@ -29,6 +28,7 @@ const timeslots = generateTimes();
 const AppointmentForm = () => {
   const { user } = useAuthStore();
   const patientDNI = user ? user.DNI : '';
+  const navigate = useNavigate()
 
   const {
     currentMonth,
@@ -52,10 +52,10 @@ const AppointmentForm = () => {
         text: "Please log in to make an appointment.",
         icon: 'error',
         confirmButtonText: 'OK',
-      });
-      navigate("/login");
+      })
+      navigate("/login")
     } else {
-      setPatientDNI(patientDNI); // Actualiza patientDNI en el store
+      setPatientDNI(patientDNI);
       loadData();
     }
   }, [user, patientDNI, loadData, setPatientDNI]);
