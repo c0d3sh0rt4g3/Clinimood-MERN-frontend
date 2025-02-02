@@ -5,11 +5,23 @@ import useAuthStore from "../context/useAuthStore.jsx"
 import {useEffect} from "react";
 import {Button, TextField} from "@mui/material";
 import Swal from "sweetalert2";
+
+/**
+ * Validation schema for the login form.
+ * Ensures email and password fields are correctly formatted and required.
+ */
 const validationSchema = Yup.object({
     email: Yup.string().email('Email not valid').required('Email is required'),
     password: Yup.string().required('Password is required'),
 })
 
+/**
+ * Login form component using Formik for handling form state and validation.
+ * Redirects authenticated users and handles login errors.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered login form component.
+ */
 const LoginForm = () => {
     const loginUser = useAuthStore((state) => state.loginUser)
     const { user } = useAuthStore();
@@ -22,6 +34,15 @@ const LoginForm = () => {
         }
     }, [navigate])
 
+    /**
+     * Handles form submission by calling the login function and redirecting users based on their role.
+     * Displays an error alert if login fails.
+     *
+     * @param {Object} values - The login form values.
+     * @param {Object} actions - Formik form actions.
+     * @param {Function} actions.setSubmitting - Function to set the submitting state.
+     * @returns {Promise<void>}
+     */
     const handleSubmit = async (values, { setSubmitting }) => {
         const result = await loginUser(values);
 
@@ -48,7 +69,6 @@ const LoginForm = () => {
 
         setSubmitting(false);
     };
-
 
     return (
         <div className="form-container">

@@ -3,15 +3,24 @@ import * as Yup from 'yup'
 import { TextField, Button } from '@mui/material'
 import axios from 'axios'
 import useAuthStore from "../context/useAuthStore.jsx"
-import {NavLink, useNavigate} from "react-router-dom"
-import {useEffect} from "react"
+import { NavLink, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 import Swal from "sweetalert2";
 
+/**
+ * RegisterForm component allows users to sign up by providing their credentials.
+ * It includes form validation using Formik and Yup.
+ * @returns {JSX.Element} The registration form component.
+ */
 const RegisterForm = () => {
     const loginUser = useAuthStore((state) => state.loginUser)
     const navigate = useNavigate()
     const { user } = useAuthStore()
 
+    /**
+     * Validation schema for the registration form.
+     * @type {Yup.ObjectSchema}
+     */
     const validationSchema = Yup.object({
         DNI: Yup.string()
             .min(8, 'DNI must have at least 8 digits')
@@ -29,6 +38,7 @@ const RegisterForm = () => {
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
             .required('You must confirm your password'),
     })
+
     useEffect(() => {
         // Redirect to home if logged in
         if (user) {
@@ -36,6 +46,14 @@ const RegisterForm = () => {
         }
     }, [navigate])
 
+    /**
+     * Handles form submission to register a new user.
+     * @param {Object} values - Form values.
+     * @param {Object} actions - Formik actions.
+     * @param {Function} actions.setSubmitting - Function to control submission state.
+     * @param {Function} actions.resetForm - Function to reset the form fields.
+     * @returns {Promise<void>}
+     */
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
             const payload = { ...values, role: "patient" }
@@ -49,16 +67,16 @@ const RegisterForm = () => {
 
             if (loginResult.success) {
                 Swal.fire({
-                  title: 'Success!',
-                  text: 'User signed up successfully',
-                  icon: 'success',
-                  confirmButtonText: 'OK',
+                    title: 'Success!',
+                    text: 'User signed up successfully',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
                 })
                 navigate('/')
             } else {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'Error loggin in after registration',
+                    text: 'Error logging in after registration',
                     icon: 'error',
                     confirmButtonText: 'OK',
                 });
@@ -132,36 +150,6 @@ const RegisterForm = () => {
                         </Field>
                         <ErrorMessage name="email" component="div" className="error-message" />
 
-                        <Field name="password">
-                            {({ field }) => (
-                                <TextField
-                                    {...field}
-                                    type="password"
-                                    label="Password"
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    className="input-field"
-                                />
-                            )}
-                        </Field>
-                        <ErrorMessage name="password" component="div" className="error-message" />
-
-                        <Field name="confirmPassword">
-                            {({ field }) => (
-                                <TextField
-                                    {...field}
-                                    type="password"
-                                    label="Confirm Password"
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    className="input-field"
-                                />
-                            )}
-                        </Field>
-                        <ErrorMessage name="confirmPassword" component="div" className="error-message" />
-
                         <p className="form-links"> Have already an account? <NavLink to="/login">Login!</NavLink></p>
 
                         <Button
@@ -181,6 +169,7 @@ const RegisterForm = () => {
 }
 
 export default RegisterForm
+
 
 
 
