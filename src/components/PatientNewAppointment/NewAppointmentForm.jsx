@@ -28,7 +28,7 @@ const AppointmentForm = () => {
   const { user } = useAuthStore();
   const patientDNI = user ? user.DNI : '';
 
-  // Usa el store de Zustand
+  // User the store Zustand 
   const {
     currentMonth,
     formData,
@@ -39,7 +39,7 @@ const AppointmentForm = () => {
     setCurrentMonth,
     setFormData,
     setSelectedDate,
-    setPatientDNI, // Asegúrate de importar esta acción
+    setPatientDNI, 
     loadData,
     handleSubmit,
   } = useCreateAppointmentStore();
@@ -49,7 +49,7 @@ const AppointmentForm = () => {
       alert("Please log in to make an appointment.");
       window.location.href = "/login";
     } else {
-      setPatientDNI(patientDNI); // Actualiza patientDNI en el store
+      setPatientDNI(patientDNI); //Update patient in Zustand
       loadData();
     }
   }, [user, patientDNI, loadData, setPatientDNI]);

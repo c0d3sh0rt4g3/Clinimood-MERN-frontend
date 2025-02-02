@@ -6,6 +6,7 @@
   margin: 0 auto;
   height: 55vh;
   font-size: 20px;
+  margin: 10%;
 }
 
 .head__element, .element__column {
@@ -55,4 +56,51 @@
 
 #column__save-btn {
   background-color: #bdcefb;
+}
+
+.dark-mode #users-table {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.dark-mode .head__element {
+  background-color: var(--dark-header-bg);
+  color: var(--dark-text);
+}
+
+.dark-mode .body__element {
+  background-color: var(--dark-day-bg);
+}
+
+.dark-mode .body__element:nth-child(even) {
+  background-color: var(--dark-header-bg);
+}
+
+.dark-mode .element__column {
+  border-color: var(--dark-day-bg);
+}
+
+.dark-mode .column__btn {
+  background-color: var(--dark-header-bg);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.dark-mode #column__role-selector {
+  color: var(--dark-text);
+  background-color: var(--dark-bg);
+}
+
+.dark-mode #column__delete-btn {
+  background-color: var(--dark-status-pending-bg);
+  color: var(--dark-status-pending-text);
+}
+
+.dark-mode #column__save-btn {
+  background-color: var(--dark-status-confirmed-bg);
+  color: var(--dark-status-confirmed-text);
+}
+.dark-mode .head__element, .element__column {
+  border-color: var(--dark-border);
 }

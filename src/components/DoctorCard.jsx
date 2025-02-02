@@ -1,7 +1,7 @@
 import React from "react";
 import "../style/main.scss";
 
-const defaultProfilePicture = "../public/default-doctor.png";
+const defaultProfilePicture = "../default-doctor.png";
 const DoctorCard = ({ name, specialization, profilePicture }) => {
   return (
     <div className="doctor-card">
