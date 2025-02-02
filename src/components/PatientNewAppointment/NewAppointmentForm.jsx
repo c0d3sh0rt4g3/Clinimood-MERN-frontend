@@ -40,7 +40,9 @@ const AppointmentForm = () => {
     setCurrentMonth,
     setFormData,
     setSelectedDate,
-    setPatientDNI,
+
+    setPatientDNI, 
+
     loadData,
     handleSubmit,
   } = useCreateAppointmentStore();
@@ -55,7 +57,9 @@ const AppointmentForm = () => {
       })
       navigate("/login")
     } else {
+
       setPatientDNI(patientDNI);
+
       loadData();
     }
   }, [user, patientDNI, loadData, setPatientDNI]);
