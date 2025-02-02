@@ -8,6 +8,7 @@ const DownloadAppointmentsPDF = ({ appointments, patientDetails }) => {
 
     doc.text("Doctor Appointments", 14, 10);
 
+    // eslint-disable-next-line react/prop-types
     const tableData = appointments.map((appt) => {
       const patientInfo = patientDetails[appt.patientDNI] || {};
       return [

@@ -6,6 +6,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { TextField, Button } from "@mui/material";
 
+/**
+ * ProfilePage component allows users to view and update their profile information.
+ * It includes form validation using Formik and Yup.
+ * @returns {JSX.Element} The user profile page component.
+ */
 const ProfilePage = () => {
     const { user, setUser } = useAuthStore();
     const [loading, setLoading] = useState(false);
@@ -14,6 +19,10 @@ const ProfilePage = () => {
         if (!user) return;
     }, [user]);
 
+    /**
+     * Initial values for the profile form.
+     * @type {Object}
+     */
     const initialValues = {
         name: user?.name || "",
         email: user?.email || "",
@@ -23,6 +32,10 @@ const ProfilePage = () => {
         specialization: user?.role === "doctor" ? user?.specialization || "" : ""
     };
 
+    /**
+     * Validation schema for the profile form.
+     * @type {Yup.ObjectSchema}
+     */
     const validationSchema = Yup.object({
         name: Yup.string().required("Name is required"),
         phone: Yup.string(),
@@ -30,6 +43,13 @@ const ProfilePage = () => {
         specialization: Yup.string(),
     });
 
+    /**
+     * Handles form submission to update user profile.
+     * @param {Object} values - Form values.
+     * @param {Object} actions - Formik actions.
+     * @param {Function} actions.setSubmitting - Function to control submission state.
+     * @returns {Promise<void>}
+     */
     const handleSubmit = async (values, { setSubmitting }) => {
         setLoading(true);
         try {
