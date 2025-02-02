@@ -5,10 +5,12 @@ import useAuthStore from "../context/useAuthStore";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { TextField, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
     const { user, setUser } = useAuthStore();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // Use the hook at the top level
 
     useEffect(() => {
         if (!user) return;
@@ -109,7 +111,12 @@ const ProfilePage = () => {
                     )}
                 </Formik>
 
-                <Button className="form-button" variant="contained" fullWidth>
+                <Button
+                    className="form-button"
+                    variant="contained"
+                    onClick={() => navigate("/password-recovery")} // Correct usage of navigate
+                    fullWidth
+                >
                     Change Password
                 </Button>
             </div>

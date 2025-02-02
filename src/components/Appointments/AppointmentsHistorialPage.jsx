@@ -309,7 +309,9 @@ const AppointmentForm = () => {
                 <div key={appointment._id} className="appointment-form__appointment-item">
                   {doctorDetails[appointment.doctorDNI] ? (
                     <p>
-                      <strong>Doctor:</strong> {doctorDetails[appointment.doctorDNI].name} ({doctorDetails[appointment.doctorDNI].specialization})
+                      <strong>Doctor:</strong>
+                      {doctorDetails[appointment.doctorDNI].name}
+                      {doctorDetails[appointment.doctorDNI].specialization ? `${doctorDetails[appointment.doctorDNI].specialization}` : ''}
                     </p>
                   ) : (
                     doctorError && <p className="error">{doctorError}</p>
