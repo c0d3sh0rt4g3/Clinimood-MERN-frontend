@@ -48,7 +48,6 @@ const Doctors = () => {
             setFilteredDoctors(response.data.data);
         } catch (error) {
             console.error(error);
-            alert("Failed to fetch doctors. Please try again later.");
         } finally {
             setLoading(false);
         }

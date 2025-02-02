@@ -3,9 +3,10 @@ import { format, addMonths, subMonths, startOfMonth, endOfMonth } from "date-fns
 import useAuthStore from '../../context/useAuthStore';
 import useCreateAppointmentStore from '../../context/useCreateAppointmentStore'; // Importa el store
 import "../../style/main.scss";
+import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const HOLIDAYS = [];
-
 
 const generateTimes = () => {
   const times = [];
@@ -27,8 +28,8 @@ const timeslots = generateTimes();
 const AppointmentForm = () => {
   const { user } = useAuthStore();
   const patientDNI = user ? user.DNI : '';
+  const navigate = useNavigate()
 
-  // User the store Zustand 
   const {
     currentMonth,
     formData,
@@ -39,17 +40,26 @@ const AppointmentForm = () => {
     setCurrentMonth,
     setFormData,
     setSelectedDate,
+
     setPatientDNI, 
+
     loadData,
     handleSubmit,
   } = useCreateAppointmentStore();
 
   useEffect(() => {
     if (!user) {
-      alert("Please log in to make an appointment.");
-      window.location.href = "/login";
+      Swal.fire({
+        title: 'Error!',
+        text: "Please log in to make an appointment.",
+        icon: 'error',
+        confirmButtonText: 'OK',
+      })
+      navigate("/login")
     } else {
-      setPatientDNI(patientDNI); //Update patient in Zustand
+
+      setPatientDNI(patientDNI);
+
       loadData();
     }
   }, [user, patientDNI, loadData, setPatientDNI]);

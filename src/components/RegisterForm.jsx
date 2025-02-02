@@ -5,6 +5,7 @@ import axios from 'axios'
 import useAuthStore from "../context/useAuthStore.jsx"
 import {NavLink, useNavigate} from "react-router-dom"
 import {useEffect} from "react"
+import Swal from "sweetalert2";
 
 const RegisterForm = () => {
     const loginUser = useAuthStore((state) => state.loginUser)
@@ -47,16 +48,29 @@ const RegisterForm = () => {
             })
 
             if (loginResult.success) {
-                console.log('User logged in succesfully')
-                alert('User signed up successfully')
+                Swal.fire({
+                  title: 'Success!',
+                  text: 'User signed up successfully',
+                  icon: 'success',
+                  confirmButtonText: 'OK',
+                })
                 navigate('/')
             } else {
-                alert('Error loggin in after registration')
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Error loggin in after registration',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
             }
             resetForm()
         } catch (error) {
-            console.log('Error signing up the user', error)
-            alert('Error signing up the user')
+            Swal.fire({
+                title: 'Error!',
+                text: 'Error signing up the user',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         } finally {
             setSubmitting(false)
         }
