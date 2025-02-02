@@ -4,6 +4,7 @@ import {NavLink, useNavigate} from 'react-router-dom'
 import useAuthStore from "../context/useAuthStore.jsx"
 import {useEffect} from "react";
 import {Button, TextField} from "@mui/material";
+import Swal from "sweetalert2";
 const validationSchema = Yup.object({
     email: Yup.string().email('Email not valid').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -37,7 +38,12 @@ const LoginForm = () => {
             }
         } else {
             console.error("Login error:", result.error);
-            alert(result.error || "Unknown error");
+            Swal.fire({
+                title: 'Error!',
+                text: 'Login failed',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         }
 
         setSubmitting(false);
