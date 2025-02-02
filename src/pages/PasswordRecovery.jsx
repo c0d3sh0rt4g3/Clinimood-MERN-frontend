@@ -6,33 +6,55 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-
+/**
+ * Generates a validation schema based on the form step.
+ * @param {boolean} isVerificationStep - Indicates if the user is in the verification step.
+ * @returns {Yup.ObjectSchema} - The validation schema for Formik.
+ */
 const getValidationSchema = (isVerificationStep) =>
-  Yup.object({
-    email: Yup.string().email('Invalid email format').required('Email is required'),
-    ...(isVerificationStep && {
-      verificationCode: Yup.string().required('Verification code is required'),
-      password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-        .required('Confirm your password'),
-    }),
-  });
+    Yup.object({
+      email: Yup.string().email('Invalid email format').required('Email is required'),
+      ...(isVerificationStep && {
+        verificationCode: Yup.string().required('Verification code is required'),
+        password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            .required('Confirm your password'),
+      }),
+    });
 
+/**
+ * PasswordRecovery Component
+ * Handles password recovery and reset using email verification.
+ * @component
+ * @returns {JSX.Element} - The PasswordRecovery form component.
+ */
 const PasswordRecovery = () => {
   const [isVerificationStep, setIsVerificationStep] = useState(false);
   const navigate = useNavigate();
 
+  /**
+   * Handles form submission for password recovery and reset.
+   * @async
+   * @param {Object} values - The form values.
+   * @param {string} values.email - The user's email.
+   * @param {string} values.verificationCode - The verification code sent via email.
+   * @param {string} values.password - The new password.
+   * @param {string} values.confirmPassword - The confirmed new password.
+   * @param {Object} formikHelpers - Formik helper functions.
+   * @param {Function} formikHelpers.setSubmitting - Function to handle submission state.
+   * @param {Function} formikHelpers.setValues - Function to update form values.
+   */
   const handleSubmit = async (values, { setSubmitting, setValues }) => {
     try {
       if (isVerificationStep) {
         const response = await axios.post(
-          'https://clinimood-mern-backend.onrender.com/users/recover/reset-password',
-          {
-            email: values.email,
-            token: values.verificationCode,
-            newPassword: values.password,
-          }
+            'https://clinimood-mern-backend.onrender.com/users/recover/reset-password',
+            {
+              email: values.email,
+              token: values.verificationCode,
+              newPassword: values.password,
+            }
         );
         Swal.fire({
           title: 'Success!',
@@ -42,8 +64,8 @@ const PasswordRecovery = () => {
         }).then(() => navigate('/login'));
       } else {
         const response = await axios.post(
-          'https://clinimood-mern-backend.onrender.com/users/recover/forgot-password',
-          { email: values.email }
+            'https://clinimood-mern-backend.onrender.com/users/recover/forgot-password',
+            { email: values.email }
         );
 
         Swal.fire({
