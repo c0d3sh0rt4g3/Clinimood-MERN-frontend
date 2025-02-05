@@ -296,6 +296,7 @@ const AppointmentForm = () => {
               <Link
                 to="/new-appointment"
                 className="appointment-form__button appointment-form__button--default"
+                aria-label="Schedule a new appointment"
               >
                 Get New Appointment
               </Link>

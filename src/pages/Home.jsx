@@ -1,7 +1,6 @@
 import "../style/components/Home.scss";
 import {useNavigate} from "react-router-dom";
 
-
 const Home = () => {
   const navigate = useNavigate();
   return (
@@ -26,7 +25,7 @@ const Home = () => {
         {/* Image Section */}
         <div className="image-container">
           <img
-              src="src/resources/doctores-home.png"
+              src="/doctores-home.png"
               alt="Medical Appointment"
               className="right-image"
           />
