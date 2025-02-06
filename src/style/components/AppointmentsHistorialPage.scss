@@ -215,7 +215,7 @@
 }
 
 .appointment-form__button--confirm:hover {
-  background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+  background-color: #45a049; 
 }
 
 .appointment-form__button--cancel {
@@ -306,27 +306,27 @@
 }
 
 .dark-mode .appointment-form__button--confirm {
-  background-color: #388e3c; /* Verde más oscuro para modo oscuro */
+  background-color: #388e3c;
 }
 
 .dark-mode .appointment-form__button--confirm:hover {
-  background-color: #2e7d32; /* Verde más oscuro al pasar el mouse */
+  background-color: #2e7d32;
 }
 
 .dark-mode .appointment-form__button--cancel {
-  background-color: #d32f2f; /* Rojo más oscuro para modo oscuro */
+  background-color: #d32f2f;
 }
 
 .dark-mode .appointment-form__button--cancel:hover {
-  background-color: #c62828; /* Rojo más oscuro al pasar el mouse */
+  background-color: #c62828;
 }
 
 .dark-mode .appointment-form__button--new {
-  background-color: #1976d2; /* Azul más oscuro para modo oscuro */
+  background-color: #1976d2;
 }
 
 .dark-mode .appointment-form__button--new:hover {
-  background-color: #1565c0; /* Azul más oscuro al pasar el mouse */
+  background-color: #1565c0; 
 }
 
 .dark-mode .appointment-form__textarea {
@@ -364,20 +364,20 @@
 
 
 .appointment-form__appointments-list {
-  gap: 15px; /* Más espacio entre las citas */
+  gap: 15px;
 }
 
 .appointment-form__appointment-item {
-  padding: 20px; /* Más padding para más espacio interno */
+  padding: 20px;
 }
 
 .appointment-form {
   font-family: Arial, sans-serif;
-  max-width: 1000px; /* Aumentamos el ancho máximo */
+  max-width: 1000px;
   margin: 20px auto;
   display: flex;
   gap: 20px;
-  padding: 30px; /* Aumentamos el padding */
+  padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: var(--light-bg);

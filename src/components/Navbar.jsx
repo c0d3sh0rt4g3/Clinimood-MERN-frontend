@@ -3,20 +3,12 @@ import { useState, useEffect } from 'react';
 import useAuthStore from '../context/useAuthStore';
 import '../style/main.scss';
 
-/**
- * Navbar component that provides navigation and user authentication options.
- * Includes dark mode toggle and conditional rendering based on user roles.
- */
 const Navbar = () => {
   const { user, clearUser } = useAuthStore();
   const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(
-      localStorage.getItem('darkMode') === 'enabled'
-  );
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'enabled');
+  const [menuOpen, setMenuOpen] = useState(false); // Nuevo estado para el menú
 
-  /**
-   * Toggles dark mode and updates local storage.
-   */
   const toggleDarkMode = () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
@@ -24,18 +16,12 @@ const Navbar = () => {
     localStorage.setItem('darkMode', newMode ? 'enabled' : 'disabled');
   };
 
-  /**
-   * Loads dark mode state from local storage when component mounts.
-   */
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark-mode');
     }
   }, [darkMode]);
 
-  /**
-   * Handles user logout, clears authentication state, and redirects to home page.
-   */
   const handleLogout = () => {
     clearUser();
     navigate('/');
@@ -49,28 +35,31 @@ const Navbar = () => {
             <span className="navbar__logo-text">Clinimood</span>
           </div>
 
-          <ul className="navbar__links">
-            <NavLink to="/" className="navbar__link">Home</NavLink>
-            <NavLink to="/contact" className="navbar__link">Contact</NavLink>
+          {/* Botón para abrir el menú en móviles */}
+          <button className="navbar__toggle" onClick={() => setMenuOpen(!menuOpen)}>
+            ☰
+          </button>
+
+          <ul className={`navbar__links ${menuOpen ? 'active' : ''}`}>
+            <NavLink to="/" className="navbar__link" onClick={() => setMenuOpen(false)}>Home</NavLink>
+            <NavLink to="/contact" className="navbar__link" onClick={() => setMenuOpen(false)}>Contact</NavLink>
             {user && (
                 <>
-                  {/* Show patient-specific links */}
                   {user.role === 'patient' && (
                       <>
-                        <NavLink to="/history" className="navbar__link">History</NavLink>
-                        <NavLink to="/new-appointment" className="navbar__link">New appointment</NavLink>
+                        <NavLink to="/history" className="navbar__link" onClick={() => setMenuOpen(false)}>History</NavLink>
+                        <NavLink to="/new-appointment" className="navbar__link" onClick={() => setMenuOpen(false)}>New appointment</NavLink>
                       </>
                   )}
-                  {/* Show doctor-specific links */}
                   {user.role === 'doctor' && (
                       <>
-                        <NavLink to="/doctor-appointments" className="navbar__link">Appointments</NavLink>
-                        <NavLink to="/doctor-patients" className="navbar__link">Patients</NavLink>
+                        <NavLink to="/doctor-appointments" className="navbar__link" onClick={() => setMenuOpen(false)}>Appointments</NavLink>
+                        <NavLink to="/doctor-patients" className="navbar__link" onClick={() => setMenuOpen(false)}>Patients</NavLink>
                       </>
                   )}
                 </>
             )}
-            <NavLink to="/doctors" className="navbar__link">Doctors</NavLink>
+            <NavLink to="/doctors" className="navbar__link" onClick={() => setMenuOpen(false)}>Doctors</NavLink>
           </ul>
 
           <div className="navbar__actions">
@@ -80,7 +69,7 @@ const Navbar = () => {
 
             {user ? (
                 <>
-                  <span className="navbar__user-name">{user.name}</span> {/* Display user name */}
+                  <span className="navbar__user-name">{user.name}</span>
                   <button onClick={handleLogout} className="navbar__button navbar__button--logout">
                     Logout
                   </button>
