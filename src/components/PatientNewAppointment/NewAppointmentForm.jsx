@@ -54,7 +54,11 @@ const AppointmentForm = () => {
         text: "Please log in to make an appointment.",
         icon: 'error',
         confirmButtonText: 'OK',
-      })
+        didOpen: () => {
+          document.querySelector('.swal2-popup').setAttribute('role', 'alert');
+        }
+      });
+      
       navigate("/login")
     } else {
 
@@ -144,9 +148,18 @@ const AppointmentForm = () => {
               : ""
           }`}
           onClick={() => !isDisabled && handleDateClick(formattedDate)}
+          onKeyDown={(e) => {
+            if (!isDisabled && (e.key === "Enter" || e.key === " ")) {
+              handleDateClick(formattedDate);
+            }
+          }}
+          tabIndex={isDisabled ? -1 : 0}
+          role="button"
+          aria-label={`Select ${formattedDate}`}
         >
           {i}
         </div>
+
       );
     }
 
@@ -157,11 +170,13 @@ const AppointmentForm = () => {
     formData.date && formData.doctorDni && formData.time && formData.description;
 
   return (
+    
     <div className="appointment-form">
       <h2 className="appointment-form__title">Book an Appointment</h2>
       <form className="appointment-form__form" onSubmit={handleSubmit}>
         <div className="appointment-form__calendar-container">
           <div className="appointment-form__calendar-header">
+          
             <button
               type="button"
               className="appointment-form__month-button"
@@ -195,7 +210,7 @@ const AppointmentForm = () => {
           Doctor
         </label>
         {loadingDoctors ? (
-          <p>Loading doctors...</p>
+          <p aria-live="polite">Loading doctors...</p>
         ) : (
           <select
             id="doctor-select"

@@ -16,33 +16,30 @@ import {
   confirmAppointment as confirmAppointmentApi,
   cancelAppointment as cancelAppointmentApi,
 } from '../../assets/apiService';
-
-import {useNavigate} from "react-router-dom";
-
-
+import { useNavigate } from "react-router-dom";
 
 const formatAppointmentDate = (date) => format(new Date(date), "yyyy-MM-dd");
 
 const AppointmentForm = () => {
-  const { user } = useAuthStore(); 
+  const { user } = useAuthStore();
   const dni = user ? user.DNI : '';
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
-  const [selectedAppointments, setSelectedAppointments] = useState([]); 
-  const [doctorDetails, setDoctorDetails] = useState({}); 
+  const [selectedAppointments, setSelectedAppointments] = useState([]);
+  const [doctorDetails, setDoctorDetails] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [doctorError, setDoctorError] = useState(null);
   const [operationLoading, setOperationLoading] = useState(false);
 
   const today = new Date();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchAppointments = async () => {
     setLoading(true);
     setError(null);
-  
+
     try {
       const result = await fetchAppointmentsApi();
       if (result.success) {
@@ -60,13 +57,12 @@ const AppointmentForm = () => {
   };
 
   useEffect(() => {
-    // Redirect to home if not logged in
     if (!user) {
-        navigate('/')
+      navigate('/');
     }
     if (!dni) return;
     fetchAppointments();
-  }, [dni]);
+  }, [dni, user, navigate]);
 
   useEffect(() => {
     if (appointments.length > 0) {
@@ -75,16 +71,15 @@ const AppointmentForm = () => {
       handleDateClick(todayFormatted);
     }
   }, [appointments]);
-  
+
   useEffect(() => {
     if (selectedAppointments.length === 0) return;
-  
-    const fetchDoctorsDetails = async () => {
 
+    const fetchDoctorsDetails = async () => {
       setLoading(true);
       setDoctorDetails({});
       setDoctorError(null);
-  
+
       try {
         const details = {};
         for (const appointment of selectedAppointments) {
@@ -92,7 +87,7 @@ const AppointmentForm = () => {
             console.error("Invalid doctorDNI:", appointment.doctorDNI);
             continue;
           }
-  
+
           const result = await fetchDoctorDetailsApi(appointment.doctorDNI);
           if (result.success) {
             details[appointment.doctorDNI] = result.data;
@@ -107,7 +102,7 @@ const AppointmentForm = () => {
         setLoading(false);
       }
     };
-  
+
     fetchDoctorsDetails();
   }, [selectedAppointments]);
 
@@ -197,6 +192,13 @@ const AppointmentForm = () => {
     setSelectedAppointments(appointmentsForDate);
   };
 
+  const handleKeyDown = (event, date) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Evita el comportamiento por defecto (scroll con Space)
+      handleDateClick(date);
+    }
+  };
+
   const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
   const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
 
@@ -237,6 +239,10 @@ const AppointmentForm = () => {
             selectedDate === formattedDate ? "appointment-form__calendar-day--selected" : ""
           } ${isWeekend ? "appointment-form__calendar-day--weekend" : ""}`}
           onClick={!isWeekend ? () => handleDateClick(formattedDate) : undefined}
+          onKeyDown={(e) => !isWeekend && handleKeyDown(e, formattedDate)}
+          tabIndex={!isWeekend ? 0 : -1} // Hace que los días no sean enfocables si son fines de semana
+          role="button" // Indica que este elemento es interactivo
+          aria-label={`Select date ${formattedDate}`} // Mejora la accesibilidad
           style={{ pointerEvents: isWeekend ? "none" : "auto" }}
         >
           {i}
