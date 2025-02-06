@@ -1,7 +1,6 @@
 
 .navbar {
-  margin-left: 3%;
-  width: 90%;
+  width: 95.9%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -146,7 +145,6 @@
 @media (max-width: 1030px) {
   .navbar {
     flex-direction: column;
-    width: 90%;
     padding: 1rem;
   }
 
