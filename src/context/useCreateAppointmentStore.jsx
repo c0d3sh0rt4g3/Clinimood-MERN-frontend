@@ -7,12 +7,7 @@ import {
   updateMedicalHistory as updateMedicalHistoryApi,
 } from '../assets/apiService';
 
-/**
- * Zustand store for managing appointment creation.
- * Handles fetching doctors, appointments, form data management, and appointment creation.
- */
 const useCreateAppointmentStore = create((set, get) => ({
-  // State variables
   currentMonth: new Date(),
   formData: {
     date: "",
@@ -26,56 +21,14 @@ const useCreateAppointmentStore = create((set, get) => ({
   appointments: [],
   patientDNI: "",
 
-  // Actions to update state
-  /**
-   * Sets the current month for appointment scheduling.
-   * @param {Date} date - The new month to set.
-   */
   setCurrentMonth: (date) => set({ currentMonth: date }),
-
-  /**
-   * Updates the form data for appointment creation.
-   * @param {Object} data - The form data object.
-   */
   setFormData: (data) => set({ formData: data }),
-
-  /**
-   * Updates the list of available doctors.
-   * @param {Array} doctors - List of doctors.
-   */
   setDoctors: (doctors) => set({ doctors }),
-
-  /**
-   * Sets the loading state for fetching doctors.
-   * @param {boolean} loading - Whether the doctors are being loaded.
-   */
   setLoadingDoctors: (loading) => set({ loadingDoctors: loading }),
-
-  /**
-   * Sets the selected date for the appointment.
-   * @param {string} date - The selected date.
-   */
   setSelectedDate: (date) => set({ selectedDate: date }),
-
-  /**
-   * Updates the list of existing appointments.
-   * @param {Array} appointments - List of appointments.
-   */
   setAppointments: (appointments) => set({ appointments }),
-
-  /**
-   * Updates the patient's DNI (identification number).
-   * @param {string} dni - The patient's DNI.
-   */
   setPatientDNI: (dni) => set({ patientDNI: dni }),
 
-  // Fetch doctors and appointments
-  /**
-   * Fetches doctors and appointments data from the API.
-   * Updates the store with the retrieved data.
-   * Handles errors and loading state.
-   * @async
-   */
   loadData: async () => {
     set({ loadingDoctors: true });
     try {
@@ -100,18 +53,10 @@ const useCreateAppointmentStore = create((set, get) => ({
     }
   },
 
-  // Handle form submission
-  /**
-   * Handles the appointment form submission.
-   * Validates form fields, confirms submission, and sends the appointment request.
-   * @param {Event} e - Form submit event.
-   * @async
-   */
-  handleSubmit: async (e) => {
+  handleSubmit: async (e, navigate) => {
     e.preventDefault();
-    const { formData, patientDNI } = get(); // Get patientDNI from state
+    const { formData, patientDNI } = get();
 
-    // Validate form fields
     if (!formData.date || !formData.doctorDni || !formData.time || !formData.description) {
       Swal.fire({
         icon: "error",
@@ -123,14 +68,13 @@ const useCreateAppointmentStore = create((set, get) => ({
 
     const appointmentDate = `${formData.date}T${formData.time}`;
     const appointmentBody = {
-      patientDNI, // Use patientDNI from state
+      patientDNI,
       doctorDNI: formData.doctorDni,
       date: appointmentDate,
       description: formData.description,
     };
 
     try {
-      // Confirm appointment creation
       const result = await Swal.fire({
         title: "Are you sure?",
         text: "Do you want to confirm this appointment?",
@@ -151,7 +95,7 @@ const useCreateAppointmentStore = create((set, get) => ({
             text: "Your appointment has been successfully scheduled.",
           });
           setTimeout(() => {
-            window.location.href = "/history";
+            navigate("/history");
           }, 2000);
         } else {
           Swal.fire({

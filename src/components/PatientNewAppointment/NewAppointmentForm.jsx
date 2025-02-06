@@ -173,7 +173,7 @@ const AppointmentForm = () => {
     
     <div className="appointment-form">
       <h2 className="appointment-form__title">Book an Appointment</h2>
-      <form className="appointment-form__form" onSubmit={handleSubmit}>
+      <form className="appointment-form__form" onSubmit={(e) => handleSubmit(e, navigate)}>
         <div className="appointment-form__calendar-container">
           <div className="appointment-form__calendar-header">
           
